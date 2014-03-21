@@ -889,6 +889,7 @@ MonoBehaviour:
   aimJoystick: {fileID: 1511597650}
   speed: 10
   prefabBullet: {fileID: 11400000, guid: cf38facd8d722fe42b84d26f2fde816b, type: 2}
+  disableControls: 0
 --- !u!54 &1691133159
 Rigidbody:
   m_ObjectHideFlags: 0

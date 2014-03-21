@@ -5,6 +5,7 @@ public class GameController : MonoBehaviour {
 
 
 	private int currentWave;
+	private bool showGameOver = false;
 
 
 	public StraightMob prefabStraightMob;
@@ -26,7 +27,19 @@ public class GameController : MonoBehaviour {
 
 	void Reset() {
 		currentWave = 0;
+		showGameOver = false;
 		player.transform.position = new Vector3(0, 1, 0);
+		player.disableControls = false;
+
+		Object[] mobs = GameObject.FindObjectsOfType (typeof(BaseMob));
+		foreach (BaseMob mob in mobs) {
+			Destroy(mob.gameObject);
+		}
+
+		Object[] bullets = Object.FindObjectsOfType (typeof(Bullet));
+		foreach (Bullet bullet in bullets) {
+			Destroy(bullet.gameObject);
+		}
 	}
 
 
@@ -65,8 +78,30 @@ public class GameController : MonoBehaviour {
 
 	public void GameOver() {
 		Debug.Log ("died");
-		GUI.Label(new Rect(1, 1, 100, 100), new GUIContent("died"));
+		showGameOver = true;
+		player.disableControls = true;
 	}
 
+
+	void OnGUI () {
+		if (showGameOver) {
+			int boxW = 250;
+			int boxH = 300;
+			Rect box = new Rect((Screen.width-boxW)/2, (Screen.height-boxH)/2, boxW, boxH);
+
+			GUI.Box (box, "DIED");
+
+			int btnW = 200;
+			int btnH = 200;
+			Rect btn = new Rect((Screen.width-btnW)/2, (Screen.height-btnH)/2, btnW, btnH);
+
+			if (GUI.Button (btn, "Play again")) {
+				Reset();
+			}
+		}
+	}
+
+
+	
 
 }
