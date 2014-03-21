@@ -89,15 +89,19 @@ public class PlayerController : MonoBehaviour {
 
 
 		// --- Joysticks --- //
-		if (!disableControls && moveJoystick.isFingerDown) { 
-			Vector3 joyDir = new Vector3(moveJoystick.position.x, 0f, moveJoystick.position.y);
-			gameObject.transform.forward = Vector3.Normalize(joyDir);
-			gameObject.transform.Translate(Vector3.forward * Time.deltaTime * speed);
+		if (moveJoystick != null) {
+			if (!disableControls && moveJoystick.isFingerDown) { 
+				Vector3 joyDir = new Vector3 (moveJoystick.position.x, 0f, moveJoystick.position.y);
+				gameObject.transform.forward = Vector3.Normalize (joyDir);
+				gameObject.transform.Translate (Vector3.forward * Time.deltaTime * speed);
+			}
 		}
 
-		if (!disableControls && aimJoystick.isFingerDown) {
-			Vector3 joyDir = new Vector3(aimJoystick.position.x, 0f, aimJoystick.position.y);
-			Shoot(joyDir);
+		if (aimJoystick != null) {
+			if (!disableControls && aimJoystick.isFingerDown) {
+				Vector3 joyDir = new Vector3 (aimJoystick.position.x, 0f, aimJoystick.position.y);
+				Shoot (joyDir);
+			}
 		}
 	}
 
