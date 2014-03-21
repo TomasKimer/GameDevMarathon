@@ -8,5 +8,6 @@
 *.unityproj
 *.sln
 *.suo
+*.userprefs
 
 *.db
