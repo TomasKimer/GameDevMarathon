@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BaseMob : MonoBehaviour {
+public class RandomMob : MonoBehaviour {
 
 	public float yAngle = 10;
 	public float speed = 10;
@@ -24,10 +24,15 @@ public class BaseMob : MonoBehaviour {
 		//gameObject.rigidbody.velocity = Vector3.zero;
 		gameObject.rigidbody.angularVelocity = Vector3.zero;
 
-		//gameObject.transform.Rotate (new Vector3 (0, yAngle, 0) * Time.deltaTime);
+		if (yAngle > 0)
+			yAngle -= Random.Range (0, 90) * Time.deltaTime;
+		if (yAngle < 0)
+			yAngle += Random.Range (0, 90) * Time.deltaTime;
+		
+		
+		gameObject.transform.Rotate (new Vector3 (0, yAngle, 0) * Time.deltaTime);
 		gameObject.transform.Translate (velocity * Time.deltaTime);
-		//rigidbody.transform.Rotate (rigidbody.angularVelocity, Space.World);
-		//rigidbody.transform.Translate (rigidbody.velocity, Space.World);
+
 	}
 	
 	
@@ -38,21 +43,13 @@ public class BaseMob : MonoBehaviour {
 			Vector3 globalVector = gameObject.transform.TransformDirection(velocity);
 			globalVector = Vector3.Reflect(globalVector, collision.contacts[0].normal);
 			velocity = gameObject.transform.InverseTransformDirection(globalVector);
+			yAngle = Random.Range(-200,200);
 		}
-
+		
 		if (LayerMask.LayerToName (collision.gameObject.layer) == "bullets") {
 			Destroy(this.gameObject);
 		}
-
-
+		
+		
 	}
-	
-	/*
-	void OnGUI () {
-		GameObject player = GameObject.FindWithTag ("Player");
-		float distance = Vector3.Distance (player.transform.position, gameObject.transform.position);
-
-		GUI.Label(new Rect(1, 1, 100, 100), new GUIContent("distance to player: " + distance));
-	}
-	*/
 }
