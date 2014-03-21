@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour {
 
 	public StraightMob prefabStraightMob;
 	public BaseMob prefabBaseMob;
+	public PlayerController player;
 
 
 
@@ -25,6 +26,7 @@ public class GameController : MonoBehaviour {
 
 	void Reset() {
 		currentWave = 0;
+		player.transform.position = Vector3.zero;
 	}
 
 
@@ -56,6 +58,14 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+
+
+
+
+
+	public void GameOver() {
+
+	}
 
 
 }
