@@ -433,6 +433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabStraightMob: {fileID: 11400000, guid: 7bc8b370f71a79b4eadfa3b01cb16f01, type: 2}
   prefabBaseMob: {fileID: 11400000, guid: 4692c922e23de894da259574036eea97, type: 2}
+  prefabFollowerMob: {fileID: 11400000, guid: 6b19948755d3d60408ae513c16b7ef4f, type: 2}
   player: {fileID: 1691133158}
 --- !u!4 &1429962865
 Transform:
