@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour {
 
 	void Reset() {
 		currentWave = 0;
-		player.transform.position = Vector3.zero;
+		player.transform.position = new Vector3(0, 1, 0);
 	}
 
 
@@ -64,7 +64,8 @@ public class GameController : MonoBehaviour {
 
 
 	public void GameOver() {
-
+		Debug.Log ("died");
+		GUI.Label(new Rect(1, 1, 100, 100), new GUIContent("died"));
 	}
 
 
