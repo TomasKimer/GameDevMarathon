@@ -8,11 +8,26 @@ public class PlayerController : MonoBehaviour {
 	public float speed = 15.0f;
 
 	public Bullet prefabBullet;
+	private float lastShoot = -11;
 	
 	// Use this for initialization
 	void Start () {
 	}
-	
+
+	void Shoot(Vector3 moveVec) {
+
+		if (Time.realtimeSinceStartup < lastShoot + 0.1 )
+						return;
+
+		Vector3 pos = transform.position;
+		Bullet bullet = Instantiate(prefabBullet, pos, Quaternion.identity) as Bullet;
+		bullet.SetDirection(moveVec);			
+		bullet.speed = 10;
+
+		lastShoot = Time.realtimeSinceStartup;
+
+		}
+
 	// Update is called once per frame
 	void Update () {
 		gameObject.rigidbody.velocity = Vector3.zero;
@@ -64,11 +79,9 @@ public class PlayerController : MonoBehaviour {
 			if (Input.GetKey(KeyCode.RightArrow)) {
 				moveVec.x = 1.0f;
 			}
-			
-			Vector3 pos = transform.position;
-			Bullet bullet = Instantiate(prefabBullet, pos, Quaternion.identity) as Bullet;
-			bullet.SetDirection(moveVec);			
-			bullet.speed = 10;
+
+			Shoot (moveVec);
+
 		}
 
 
@@ -81,10 +94,7 @@ public class PlayerController : MonoBehaviour {
 
 		if (aimJoystick.isFingerDown) {
 			Vector3 joyDir = new Vector3(aimJoystick.position.x, 0f, aimJoystick.position.y);
-			Vector3 pos = transform.position;
-			Bullet bullet = Instantiate(prefabBullet, pos, Quaternion.identity) as Bullet;
-			bullet.SetDirection(joyDir);			
-			bullet.speed = 10;
+			Shoot(joyDir);
 		}
 	}
 }

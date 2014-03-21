@@ -45,6 +45,7 @@ public class BaseMob : MonoBehaviour {
 
 		if (LayerMask.LayerToName (collision.gameObject.layer) == "bullets") {
 			Destroy(this.gameObject);
+			Destroy (collision.gameObject);
 		}
 
 
