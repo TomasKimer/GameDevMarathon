@@ -3,7 +3,14 @@ using System.Collections;
 
 public class GameController : MonoBehaviour {
 
+
 	private int currentWave;
+
+
+	public StraightMob prefabStraightMob;
+	public BaseMob prefabBaseMob;
+
+
 
 	
 	void Start () {
@@ -36,13 +43,9 @@ public class GameController : MonoBehaviour {
 
 
 	private void SpawnLineFromLeft() {
-		GameObject prefab = GameObject.Find ("StraightMob");
-
 		for (int i = -8; i < 10; i += 2) {
-			GameObject obj = (GameObject)Instantiate(prefab);
-			obj.transform.position = new Vector3(-8, 1, i);
-
-			StraightMob mob = (StraightMob)obj.GetComponent("StraightMob");
+			StraightMob mob =  Instantiate(prefabStraightMob) as StraightMob;
+			mob.transform.position = new Vector3(-8, 1, i);
 			mob.speed = 5;
 			mob.SetDir(new Vector3(1, 0, 0));
 		}
