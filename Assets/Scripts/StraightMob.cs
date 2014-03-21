@@ -11,12 +11,12 @@ public class StraightMob : BaseMob {
 	private Vector3 dir = Vector3.forward;
 
 
-	void UpdateVelocity () {
+	protected override void UpdateVelocity () {
 		gameObject.transform.Translate (dir * rot * speed * Time.deltaTime);
 	}
 	
 	
-	void OnCollisionWithWalls (Collision collision) {
+	protected override void OnCollisionWithWalls (Collision collision) {
 		rot = rot * -1;
 	}
 

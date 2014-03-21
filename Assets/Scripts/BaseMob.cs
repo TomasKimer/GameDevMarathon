@@ -17,7 +17,7 @@ public class BaseMob : MonoBehaviour {
 		velocity = new Vector3(x,0,z) * speed;
 	}
 
-	void UpdateVelocity() {
+	protected virtual void UpdateVelocity() {
 		gameObject.transform.position = new Vector3 (gameObject.transform.position.x, 1, gameObject.transform.position.z);
 		gameObject.transform.Translate (velocity * Time.deltaTime);
 	}
@@ -31,7 +31,7 @@ public class BaseMob : MonoBehaviour {
 		UpdateVelocity ();
 	}
 	
-	void OnCollisionWithWalls(Collision collision) {
+	protected virtual void OnCollisionWithWalls(Collision collision) {
 		Vector3 globalVector = gameObject.transform.TransformDirection(velocity);
 		globalVector = Vector3.Reflect(globalVector, collision.contacts[0].normal);
 		velocity = gameObject.transform.InverseTransformDirection(globalVector);
