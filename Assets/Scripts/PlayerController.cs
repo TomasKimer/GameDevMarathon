@@ -7,13 +7,10 @@ public class PlayerController : MonoBehaviour {
 	public Joystick aimJoystick;
 	public float speed = 15.0f;
 
-	private GameObject factory;
-	private GameObject player;
-
+	public Bullet prefabBullet;
+	
 	// Use this for initialization
 	void Start () {
-		factory = GameObject.Find ("Bullet");
-		player = GameObject.Find ("Player");
 	}
 	
 	// Update is called once per frame
@@ -68,12 +65,9 @@ public class PlayerController : MonoBehaviour {
 				moveVec.x = 1.0f;
 			}
 			
-			Vector3 pos = player.transform.position;
-			//Quaternion rot = Quaternion.player.transform.rotation;
-			GameObject newBullet = Instantiate(factory, pos, Quaternion.identity) as GameObject;
-			Bullet bullet = (Bullet)newBullet.GetComponent("Bullet");
-			bullet.SetDirection(moveVec);
-			
+			Vector3 pos = transform.position;
+			Bullet bullet = Instantiate(prefabBullet, pos, Quaternion.identity) as Bullet;
+			bullet.SetDirection(moveVec);			
 			bullet.speed = 10;
 		}
 
@@ -87,12 +81,9 @@ public class PlayerController : MonoBehaviour {
 
 		if (aimJoystick.isFingerDown) {
 			Vector3 joyDir = new Vector3(aimJoystick.position.x, 0f, aimJoystick.position.y);
-			Vector3 pos = player.transform.position;
-			//Quaternion rot = Quaternion.player.transform.rotation;
-			GameObject newBullet = Instantiate(factory, pos, Quaternion.identity) as GameObject;
-			Bullet bullet = (Bullet)newBullet.GetComponent("Bullet");
-			bullet.SetDirection(joyDir);
-
+			Vector3 pos = transform.position;
+			Bullet bullet = Instantiate(prefabBullet, pos, Quaternion.identity) as Bullet;
+			bullet.SetDirection(joyDir);			
 			bullet.speed = 10;
 		}
 	}
