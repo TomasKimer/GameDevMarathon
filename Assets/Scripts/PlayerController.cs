@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour {
 
 	public Bullet prefabBullet;
 	private float lastShoot = -11;
+
+	// napr kdyz skonci hra
+	public bool disableControls = false;
 	
 	// Use this for initialization
 	void Start () {
@@ -39,8 +42,8 @@ public class PlayerController : MonoBehaviour {
 
 
 		// WSAD - move
-		if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) ||
-		    Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) {
+		if (!disableControls && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) ||
+		    Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))) {
 
 			Vector3 moveVec = new Vector3();
 
@@ -62,8 +65,8 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		// Arrows - shoot
-		if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) ||
-		    Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) {
+		if (!disableControls && (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) ||
+		    Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))) {
 			
 			Vector3 moveVec = new Vector3();
 			
@@ -86,15 +89,30 @@ public class PlayerController : MonoBehaviour {
 
 
 		// --- Joysticks --- //
-		if (moveJoystick.isFingerDown) { 
-			Vector3 joyDir = new Vector3(moveJoystick.position.x, 0f, moveJoystick.position.y);
-			gameObject.transform.forward = Vector3.Normalize(joyDir);
-			gameObject.transform.Translate(Vector3.forward * Time.deltaTime * speed);
+		if (moveJoystick != null) {
+			if (!disableControls && moveJoystick.isFingerDown) { 
+				Vector3 joyDir = new Vector3 (moveJoystick.position.x, 0f, moveJoystick.position.y);
+				gameObject.transform.forward = Vector3.Normalize (joyDir);
+				gameObject.transform.Translate (Vector3.forward * Time.deltaTime * speed);
+			}
 		}
 
-		if (aimJoystick.isFingerDown) {
-			Vector3 joyDir = new Vector3(aimJoystick.position.x, 0f, aimJoystick.position.y);
-			Shoot(joyDir);
+		if (aimJoystick != null) {
+			if (!disableControls && aimJoystick.isFingerDown) {
+				Vector3 joyDir = new Vector3 (aimJoystick.position.x, 0f, aimJoystick.position.y);
+				Shoot (joyDir);
+			}
 		}
 	}
+
+
+
+	void OnCollisionEnter(Collision collision) {
+		if (LayerMask.LayerToName (collision.gameObject.layer) == "mobs") {
+			GameObject obj = GameObject.Find("GameController");
+			GameController ctrl = (GameController) obj.GetComponent("GameController");
+			ctrl.GameOver();
+		}		
+	}
+
 }
