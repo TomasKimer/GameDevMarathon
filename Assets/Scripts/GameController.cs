@@ -77,7 +77,6 @@ public class GameController : MonoBehaviour {
 
 
 	public void GameOver() {
-		Debug.Log ("died");
 		showGameOver = true;
 		player.disableControls = true;
 	}
