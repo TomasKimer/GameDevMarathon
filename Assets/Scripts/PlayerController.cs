@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		gameObject.rigidbody.velocity = Vector3.zero;
+		gameObject.rigidbody.angularVelocity = Vector3.zero;
+
 		// Back button.
 		if (Input.GetKeyDown(KeyCode.Escape))
 			Application.Quit();
