@@ -16,28 +16,31 @@ public class BaseMob : MonoBehaviour {
 		float z = Random.Range ((float)-1, (float)1);
 		velocity = new Vector3(x,0,z) * speed;
 	}
+
+	void UpdateVelocity() {
+		gameObject.transform.position = new Vector3 (gameObject.transform.position.x, 1, gameObject.transform.position.z);
+		gameObject.transform.Translate (velocity * Time.deltaTime);
+	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		gameObject.transform.position = new Vector3 (gameObject.transform.position.x, 1, gameObject.transform.position.z);
-		//gameObject.rigidbody.velocity = Vector3.zero;
+		gameObject.rigidbody.velocity = Vector3.zero;
 		gameObject.rigidbody.angularVelocity = Vector3.zero;
 
-		//gameObject.transform.Rotate (new Vector3 (0, yAngle, 0) * Time.deltaTime);
-		gameObject.transform.Translate (velocity * Time.deltaTime);
-		//rigidbody.transform.Rotate (rigidbody.angularVelocity, Space.World);
-		//rigidbody.transform.Translate (rigidbody.velocity, Space.World);
+		UpdateVelocity ();
 	}
 	
-	
+	void OnCollisionWithWalls(Collision collision) {
+		Vector3 globalVector = gameObject.transform.TransformDirection(velocity);
+		globalVector = Vector3.Reflect(globalVector, collision.contacts[0].normal);
+		velocity = gameObject.transform.InverseTransformDirection(globalVector);
+	}
+
 	void OnCollisionEnter(Collision collision) {
 		if (LayerMask.LayerToName(collision.gameObject.layer) == "walls") {
-			// otocit se dozadu
-			//gameObject.transform.RotateAround(transform.position, transform.up, 180);
-			Vector3 globalVector = gameObject.transform.TransformDirection(velocity);
-			globalVector = Vector3.Reflect(globalVector, collision.contacts[0].normal);
-			velocity = gameObject.transform.InverseTransformDirection(globalVector);
+			OnCollisionWithWalls(collision);
+
 		}
 
 		if (LayerMask.LayerToName (collision.gameObject.layer) == "bullets") {
