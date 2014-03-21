@@ -7,21 +7,14 @@ using System.Collections;
  */
 public class StraightMob : BaseMob {
 
-	private int rot = 1;
-	private Vector3 dir = Vector3.forward;
-
-
 	protected override void UpdateVelocity () {
-		gameObject.transform.Translate (dir * rot * speed * Time.deltaTime);
+		gameObject.transform.Translate (Vector3.forward * speed * Time.deltaTime);
 	}
 	
 	
 	protected override void OnCollisionWithWalls (Collision collision) {
-		rot = rot * -1;
+		transform.Rotate (new Vector3(0, 180, 0));
 	}
 
-	public void SetDir(Vector3 d) {
-		dir = d;
-	}
 
 }

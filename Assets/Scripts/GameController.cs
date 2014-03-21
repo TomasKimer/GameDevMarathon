@@ -45,9 +45,9 @@ public class GameController : MonoBehaviour {
 	private void SpawnLineFromLeft() {
 		for (int i = -8; i < 10; i += 2) {
 			StraightMob mob =  Instantiate(prefabStraightMob) as StraightMob;
+			mob.transform.forward = new Vector3(1, 0, 0);
 			mob.transform.position = new Vector3(-8, 1, i);
 			mob.speed = 5;
-			mob.SetDir(new Vector3(1, 0, 0));
 		}
 	}
 
