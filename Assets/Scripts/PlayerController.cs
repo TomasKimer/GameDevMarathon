@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour {
 		Vector3 pos = transform.position;
 		Bullet bullet = Instantiate(prefabBullet, pos, Quaternion.identity) as Bullet;
 		bullet.SetDirection(moveVec);			
-		bullet.speed = 10;
+		bullet.speed = 15;
 
 		lastShoot = Time.realtimeSinceStartup;
 

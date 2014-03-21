@@ -39,6 +39,8 @@ public class BaseMob : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision) {
 		if (LayerMask.LayerToName(collision.gameObject.layer) == "walls") {
+			gameObject.rigidbody.velocity = Vector3.zero;
+			gameObject.rigidbody.angularVelocity = Vector3.zero;
 			OnCollisionWithWalls(collision);
 
 		}
