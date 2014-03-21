@@ -6,7 +6,7 @@ public class BaseMob : MonoBehaviour {
 	public float yAngle = 10;
 	public float speed = 10;
 	private float orientation = 1;
-	private Vector3 velocity;
+	public Vector3 velocity;
 	
 	// Use this for initialization
 	void Start () {
@@ -24,6 +24,7 @@ public class BaseMob : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		gameObject.transform.position = new Vector3 (gameObject.transform.position.x, 1, gameObject.transform.position.z);
 
 		gameObject.rigidbody.velocity = Vector3.zero;
 		gameObject.rigidbody.angularVelocity = Vector3.zero;

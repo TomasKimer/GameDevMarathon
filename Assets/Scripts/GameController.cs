@@ -9,6 +9,8 @@ public class GameController : MonoBehaviour {
 
 	public StraightMob prefabStraightMob;
 	public BaseMob prefabBaseMob;
+	public FollowerMob prefabFollowerMob;
+
 
 
 
@@ -25,9 +27,16 @@ public class GameController : MonoBehaviour {
 
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Space)) {
-			SpawnWave(0);
+			SpawnFollower();
 		}
 	}
+
+	private void SpawnFollower() {
+			FollowerMob fm = Instantiate (prefabFollowerMob) as FollowerMob;
+			fm.transform.position = new Vector3(-8, 1, 5);
+			fm.speed = 5;
+	}
+
 
 
 
