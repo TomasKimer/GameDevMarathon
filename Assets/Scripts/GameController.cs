@@ -14,6 +14,11 @@ public class GameController : MonoBehaviour {
 
 	
 	void Start () {
+		if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer) {
+			GameObject joy = GameObject.Find("Dual Joysticks");
+			Destroy(joy);
+		}
+
 		Reset ();
 	}
 
