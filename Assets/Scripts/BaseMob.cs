@@ -7,11 +7,12 @@ public class BaseMob : MonoBehaviour {
 	public float speed = 10;
 	private float orientation = 1;
 	public Vector3 velocity;
-	public float freezeTime = 10;
+	public float freezeTime;
 	public bool alive;
 	
 	// Use this for initialization
 	void Start () {
+		freezeTime = 1;
 		alive = false;
 		Collider playerCollider = GameObject.Find ("Player").transform.collider;
 		Physics.IgnoreCollision (playerCollider, gameObject.transform.collider,true);
