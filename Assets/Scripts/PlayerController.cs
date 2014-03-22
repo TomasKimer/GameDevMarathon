@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		// mouse aim
-		if (aimJoystick == null && Application.platform == RuntimePlatform.WindowsEditor) {
+		if (Application.platform == RuntimePlatform.WindowsEditor) {
 			if (!disableControls && Input.GetMouseButton(0)) {
 				Vector2 center = new Vector2(Screen.width / 2, Screen.height / 2);
 				Vector2 dir = new Vector2(Input.mousePosition.x, Input.mousePosition.y) - center;
