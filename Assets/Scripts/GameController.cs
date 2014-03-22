@@ -59,8 +59,8 @@ public class GameController : MonoBehaviour {
 	
 	void Start () {
 		if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer) {
-			GameObject joy = GameObject.Find("Dual Joysticks");
-			Destroy(joy);
+			//GameObject joy = GameObject.Find("Dual Joysticks");
+			//Destroy(joy);
 		}
 
 		minSpawnPosX = -11;
@@ -177,6 +177,10 @@ public class GameController : MonoBehaviour {
 			if (Input.GetKeyDown(KeyCode.Escape)){
 				Reset ();
 				WelcomScreen();
+			}
+
+			if (Input.touchCount == 0 && !touchedUpOnDeath) {
+				touchedUpOnDeath = true;
 			}
 
 			// dead --> restart
