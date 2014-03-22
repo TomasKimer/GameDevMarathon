@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour {
 		Bullet bullet = Instantiate(prefabBullet, pos, Quaternion.identity) as Bullet;
 		bullet.SetDirection(moveVec);			
 		bullet.speed = 22;
+		audio.Play();
 
 		lastShoot = Time.realtimeSinceStartup;
 

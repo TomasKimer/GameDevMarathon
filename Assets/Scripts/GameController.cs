@@ -40,8 +40,15 @@ public class GameController : MonoBehaviour {
 	private TextMesh gameOverText;
 	private TextMesh subText;
 
+	private TextMesh scoreText;
+	private TextMesh timeText;
+
 	// ochrana doba pri prechodu mezi obrazovkama
 	private float transitionTime = 0;
+
+
+	private long score;
+	private float timeAlive;
 	
 
 
@@ -72,6 +79,12 @@ public class GameController : MonoBehaviour {
 		TextMesh name =  Instantiate (prefabText, new Vector3 (0, -90, 0), Quaternion.Euler(90, 0, 0)) as TextMesh;
 		logoText = name;
 
+		// score
+		scoreText = Instantiate (prefabText, new Vector3(-13, 5, 10),  Quaternion.Euler(90, 0, 0)) as TextMesh;
+		scoreText.color = Color.white;
+		scoreText.fontSize = 16;
+		scoreText.text = score.ToString();
+
 		Reset ();
 
 		// init kamery
@@ -81,7 +94,10 @@ public class GameController : MonoBehaviour {
 
 	void Reset() {
 		gamePlayTime = 0.0f;
-		
+
+		timeAlive = 0;
+		score = 0;
+
 		minSpawnInterval = 0f;
 		maxSpawnInterval = 2f;
 		nextSpawn = Random.Range (minSpawnInterval, maxSpawnInterval);

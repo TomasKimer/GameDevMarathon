@@ -11,7 +11,6 @@ GameObject:
   - 33: {fileID: 3300000}
   - 65: {fileID: 6500002}
   - 23: {fileID: 2300000}
-  - 114: {fileID: 11400000}
   - 65: {fileID: 6500000}
   - 54: {fileID: 5400000}
   - 114: {fileID: 11400002}
@@ -100,24 +99,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaf21d2bd91647e4284760cc4b60ceba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  yAngle: 10
-  speed: 0
-  velocity: {x: 0, y: 0, z: 0}
-  freezeTime: 0
-  alive: 0
-  paused: 0
-  explosionPrefab: {fileID: 11400000, guid: 26c93c3e20b7a5c4bbb5ad54fb419187, type: 2}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -135,7 +116,7 @@ MonoBehaviour:
   freezeTime: 0
   alive: 0
   paused: 0
-  explosionPrefab: {fileID: 0}
+  explosionPrefab: {fileID: 11400000, guid: 26c93c3e20b7a5c4bbb5ad54fb419187, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
