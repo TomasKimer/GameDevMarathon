@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: mob_rotator
-  m_Shader: {fileID: 3, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -54,7 +54,7 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .481509537, g: .87986362, b: .897058845, a: 1}
+        second: {r: .389814019, g: .742144406, b: .757352948, a: 1}
       data:
         first:
           name: _SpecColor
