@@ -5,6 +5,12 @@ public class GameController : MonoBehaviour {
 
 
 	private int currentWave;
+	private float gamePlayTime;
+
+	private float minSpawnInterval;
+	private float maxSpawnInterval;
+	private float nextSpawn;
+
 	private bool showGameOver = false;
 
 	public StraightMob prefabStraightMob;
@@ -36,7 +42,6 @@ public class GameController : MonoBehaviour {
 		minSpawnPosZ = -8;
 		maxSpawnPosZ = 8;
 
-
 		// zakladni setup sceny - kopie zdi jako dekorace
 		GameObject walls = GameObject.Find ("Walls");
 		for (int i = -10; i > -100; i -= 10) {
@@ -51,6 +56,12 @@ public class GameController : MonoBehaviour {
 
 
 	void Reset() {
+		gamePlayTime = 0.0f;
+		
+		minSpawnInterval = 1f;
+		maxSpawnInterval = 7f;
+		nextSpawn = Random.Range (minSpawnInterval, maxSpawnInterval);
+
 		currentWave = 0;
 		showGameOver = false;
 		player.transform.position = new Vector3(0, 1, 0);
@@ -70,9 +81,22 @@ public class GameController : MonoBehaviour {
 
 
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Space)) {
-			SpawnRandom();
+
+		gamePlayTime += Time.deltaTime;
+
+		if (gamePlayTime > nextSpawn) {
+			int type = Random.Range(0,5);
+			if (type == 1) SpawnBase();
+			if (type == 2) SpawnRandom();
+			if (type == 3) SpawnFollower();
+			if (type == 4) SpawnWave(currentWave);
+
+			nextSpawn += Random.Range (minSpawnInterval, maxSpawnInterval);
 		}
+
+		//if (Input.GetKeyDown(KeyCode.Space)) {
+		//	SpawnRandom();
+		//}
 
 		// testovani kamery
 		if (Input.GetKeyDown (KeyCode.G)) {
