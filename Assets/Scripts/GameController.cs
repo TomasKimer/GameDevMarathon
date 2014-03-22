@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour {
 	public StraightMob prefabStraightMob;
 	public BaseMob prefabBaseMob;
 	public FollowerMob prefabFollowerMob;
+	public TextMesh prefabText;
 
 	public PlayerController player;
 
