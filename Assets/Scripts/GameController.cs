@@ -69,7 +69,7 @@ public class GameController : MonoBehaviour {
 		maxSpawnPosZ = 8;
 
 		paused = false;
-		defaultTimeToNextLevel = 5;
+		defaultTimeToNextLevel = 2;
 
 		// zakladni setup sceny - kopie zdi jako dekorace
 		GameObject walls = GameObject.Find ("Walls");
@@ -110,7 +110,7 @@ public class GameController : MonoBehaviour {
 		score = 0;
 
 		minSpawnInterval = 0f;
-		maxSpawnInterval = 2f;
+		maxSpawnInterval = 1f;
 		nextSpawn = Random.Range (minSpawnInterval, maxSpawnInterval);
 		minMobs = 6;
 		spawnInProgress = true;
@@ -192,9 +192,12 @@ public class GameController : MonoBehaviour {
 
 
 		// formatovani casu
-		int msecs = Mathf.FloorToInt((gamePlayTime % 1) * 100);
+		if (currentScreen == Screens.game) {
+			timeAlive = gamePlayTime;
+		}
+		int msecs = Mathf.FloorToInt((timeAlive % 1) * 100);
 		string msecsStr = msecs < 10 ? "0" + msecs.ToString () : msecs.ToString ();
-		int formatTime = Mathf.RoundToInt(gamePlayTime);
+		int formatTime = Mathf.RoundToInt(timeAlive);
 		int mins = Mathf.FloorToInt(formatTime / 60);
 		string minsStr = mins < 10 ? "0" + mins.ToString () : mins.ToString ();
 		int secs = formatTime % 60;
@@ -360,7 +363,7 @@ public class GameController : MonoBehaviour {
 	private void SpawnLineFromUp() {
 		for (int i = -8; i < 10; i += 2) {
 			StraightMob mob =  Instantiate(prefabStraightMob) as StraightMob;
-			mob.transform.forward = new Vector3(0, 0, 1);
+			mob.transform.forward = new Vector3(0, 0, -1);
 			mob.transform.position = new Vector3(i, 1, -10);
 			mob.speed = 5;
 		}
@@ -369,7 +372,7 @@ public class GameController : MonoBehaviour {
 	private void SpawnLineFromDown() {
 		for (int i = -8; i < 10; i += 2) {
 			StraightMob mob =  Instantiate(prefabStraightMob) as StraightMob;
-			mob.transform.forward = new Vector3(0, 0, -1);
+			mob.transform.forward = new Vector3(0, 0, 1);
 			mob.transform.position = new Vector3(i, 1, 10);
 			mob.speed = 5;
 		}
