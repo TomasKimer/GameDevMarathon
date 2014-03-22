@@ -127,12 +127,6 @@ public class GameController : MonoBehaviour {
 		foreach (Bullet bullet in bullets) {
 			Destroy(bullet.gameObject);
 		}
-
-		// reset pozice a velikosti pocitadel
-		scoreText.transform.position = new Vector3(-10, 5, 10);
-		scoreText.fontSize = 100;
-		timeText.transform.position = new Vector3(10, 5, 10);
-		timeText.fontSize = 100;
 	}
 
 
@@ -185,12 +179,9 @@ public class GameController : MonoBehaviour {
 
 
 		// formatovani casu
-		if (currentScreen == Screens.game) {
-			timeAlive = gamePlayTime;
-		}
-		int msecs = Mathf.FloorToInt((timeAlive % 1) * 100);
+		int msecs = Mathf.FloorToInt((gamePlayTime % 1) * 100);
 		string msecsStr = msecs < 10 ? "0" + msecs.ToString () : msecs.ToString ();
-		int formatTime = Mathf.RoundToInt(timeAlive);
+		int formatTime = Mathf.RoundToInt(gamePlayTime);
 		int mins = Mathf.FloorToInt(formatTime / 60);
 		string minsStr = mins < 10 ? "0" + mins.ToString () : mins.ToString ();
 		int secs = formatTime % 60;
@@ -281,7 +272,7 @@ public class GameController : MonoBehaviour {
 		
 		fm.transform.position = spawnpos;
 		
-		fm.speed = 5;
+		fm.speed = 10;
 
 		}
 
@@ -311,7 +302,7 @@ public class GameController : MonoBehaviour {
 		
 		fm.transform.position = spawnpos;
 		
-		fm.speed = 5;
+		fm.speed = 10;
 		
 	}
 
@@ -481,18 +472,12 @@ public class GameController : MonoBehaviour {
 			currentScreen = Screens.gameOver;
 
 			prefabText.text = "GAME OVER";
-			gameOverText = Instantiate (prefabText, new Vector3 (0, -20, 10), Quaternion.Euler (90, 0, 0)) as TextMesh;
+			gameOverText = Instantiate (prefabText, new Vector3 (0, -20, 5), Quaternion.Euler (90, 0, 0)) as TextMesh;
 			gameOverText.fontSize = 40;
 
 			prefabText.text = "Touch to play again";
-			subText = Instantiate(prefabText, new Vector3(0, -20, -10), Quaternion.Euler (90, 0, 0)) as TextMesh;
+			subText = Instantiate(prefabText, new Vector3(0, -20, -5), Quaternion.Euler (90, 0, 0)) as TextMesh;
 			subText.fontSize = 20;
-
-			// presun pocitadel doprostred, aby byly videt
-			scoreText.transform.position = new Vector3(-15, -20, 0);
-			scoreText.fontSize = 250;
-			timeText.transform.position = new Vector3(15, -20, 0);
-			timeText.fontSize = 250;
 		}
 	}
 
