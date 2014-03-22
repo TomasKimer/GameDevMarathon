@@ -20,7 +20,8 @@ public class CameraController : MonoBehaviour {
 	private bool followPlayer = false;
 
 	private Vector3 gamePosition = new Vector3(0, 20, 0);
-	private Vector3 menuPosition = new Vector3(2, -5, 0);
+	private Vector3 menuPosition = new Vector3(0, -50, 0);
+	private int menuLevel = 0;
 
 	private bool isLerpingToGame = false;
 	private bool isLerpingToMenu = false;
@@ -45,10 +46,12 @@ public class CameraController : MonoBehaviour {
 		}
 
 		if (isLerpingToMenu) {
-			transform.position = Vector3.Lerp(transform.position, menuPosition, 0.2f);
+			Vector3 dest = menuPosition;
+			dest.y += menuLevel * 10;
+			transform.position = Vector3.Lerp(transform.position, dest, 0.2f);
 
 			// stop
-			if (Vector3.Distance (transform.position, menuPosition) < 0.1) {
+			if (Vector3.Distance (transform.position, dest) < 0.1) {
 				isLerpingToGame = false;
 			}
 		} 
@@ -80,7 +83,8 @@ public class CameraController : MonoBehaviour {
 
 
 	// presun kamery do pozice menu
-	public void MoveToMenu() {
+	public void MoveToMenu(int level) {
+		menuLevel = level;
 		isLerpingToGame = false;
 		isLerpingToMenu = true;
 		followPlayer = false;

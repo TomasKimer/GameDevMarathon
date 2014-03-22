@@ -81,7 +81,7 @@ public class GameController : MonoBehaviour {
 		}
 		if (Input.GetKeyDown (KeyCode.M)) {
 			CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
-			camCtrl.MoveToMenu();
+			camCtrl.MoveToMenu(0);
 		}
 	}
 
