@@ -30,6 +30,15 @@ public class GameController : MonoBehaviour {
 			Destroy(joy);
 		}
 
+
+		// zakladni setup sceny - kopie zdi jako dekorace
+		GameObject walls = GameObject.Find ("Walls");
+		for (int i = -10; i > -60; i -= 10) {
+			Instantiate(walls, new Vector3(walls.transform.position.x, i, walls.transform.position.z), walls.transform.rotation);
+		}
+
+
+
 		Reset ();
 	}
 
