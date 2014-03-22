@@ -109,9 +109,12 @@ public class PlayerController : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision) {
 		if (LayerMask.LayerToName (collision.gameObject.layer) == "mobs") {
-			GameObject obj = GameObject.Find("GameController");
-			GameController ctrl = (GameController) obj.GetComponent("GameController");
-			ctrl.GameOver();
+			BaseMob mob = (BaseMob) collision.gameObject.GetComponent("BaseMob");
+			if (mob.alive) {
+				GameObject obj = GameObject.Find("GameController");
+				GameController ctrl = (GameController) obj.GetComponent("GameController");
+				ctrl.GameOver();
+			}
 		}		
 	}
 
