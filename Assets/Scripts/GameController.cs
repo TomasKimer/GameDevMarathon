@@ -66,7 +66,7 @@ public class GameController : MonoBehaviour {
 		maxSpawnPosZ = 8;
 
 		paused = false;
-		defaultTimeToNextLevel = 10;
+		defaultTimeToNextLevel = 5;
 
 		// zakladni setup sceny - kopie zdi jako dekorace
 		GameObject walls = GameObject.Find ("Walls");
