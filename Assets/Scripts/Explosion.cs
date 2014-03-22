@@ -27,7 +27,7 @@ public class Explosion : MonoBehaviour {
 		color.a = Mathf.Max(0f, 1.0f - 3f * progress2);
 		gameObject.renderer.material.color = color;
 
-		if (progress >= 1.0f)
+		if (progress >= 3.0f)
 			Destroy (gameObject);
 	}
 }
