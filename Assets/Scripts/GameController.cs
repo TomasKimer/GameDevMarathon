@@ -481,6 +481,7 @@ public class GameController : MonoBehaviour {
 	public void GameOverScreen() {
 		// event muze prijit vicekrat
 		if (currentScreen != Screens.gameOver) {
+			audio.Play();
 
 			// zamerne bez pause, jen player
 			player.disableControls = true;
