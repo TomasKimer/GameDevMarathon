@@ -400,7 +400,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1358946401}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: .843200684}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
@@ -435,6 +435,10 @@ MonoBehaviour:
   prefabBaseMob: {fileID: 11400000, guid: 4692c922e23de894da259574036eea97, type: 2}
   prefabFollowerMob: {fileID: 11400000, guid: 6b19948755d3d60408ae513c16b7ef4f, type: 2}
   player: {fileID: 1691133158}
+  minSpawnPosX: -10
+  maxSpawnPosX: 10
+  minSpawnPosZ: -22
+  maxSpawnPosZ: 7
 --- !u!4 &1429962865
 Transform:
   m_ObjectHideFlags: 0
@@ -738,6 +742,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1691133158}
+  leftX: -27
+  rightX: 13
+  topZ: 8
+  bottomZ: -29
+  minRotationVertical: 67
+  maxRotationVertical: 87
+  minRotationHorizontal: -10
+  maxRotationHorizontal: 10
 --- !u!1 &1605842771
 GameObject:
   m_ObjectHideFlags: 0

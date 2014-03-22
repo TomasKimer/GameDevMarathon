@@ -14,6 +14,12 @@ public class GameController : MonoBehaviour {
 
 	public PlayerController player;
 
+	public float minSpawnPosX = -10;
+	public float maxSpawnPosX = 10;
+	public float minSpawnPosZ = -22;
+	public float maxSpawnPosZ = 7;
+
+	
 
 
 
@@ -54,9 +60,17 @@ public class GameController : MonoBehaviour {
 	}
 
 	private void SpawnFollower() {
-			FollowerMob fm = Instantiate (prefabFollowerMob) as FollowerMob;
-			fm.transform.position = new Vector3(-8, 1, 5);
-			fm.speed = 5;
+		FollowerMob fm = Instantiate (prefabFollowerMob) as FollowerMob;
+		Vector3 spawnpos = Vector3.zero;
+		while (true) {
+			spawnpos = new Vector3(Random.Range (minSpawnPosX,maxSpawnPosX), 1, Random.Range(minSpawnPosZ, maxSpawnPosZ));
+			if (Vector3.Distance(spawnpos, player.transform.position) > 3 )
+				break;
+		}
+
+		fm.transform.position = spawnpos;
+			
+		fm.speed = 5;
 	}
 
 

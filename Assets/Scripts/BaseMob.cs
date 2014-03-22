@@ -7,6 +7,7 @@ public class BaseMob : MonoBehaviour {
 	public float speed = 10;
 	private float orientation = 1;
 	public Vector3 velocity;
+	public float freezeTime = 1;
 	
 	// Use this for initialization
 	void Start () {
@@ -29,7 +30,10 @@ public class BaseMob : MonoBehaviour {
 		gameObject.rigidbody.velocity = Vector3.zero;
 		gameObject.rigidbody.angularVelocity = Vector3.zero;
 
-		UpdateVelocity ();
+		if (freezeTime > 0)
+						freezeTime -= Time.deltaTime;
+		else
+			UpdateVelocity ();
 	}
 	
 	protected virtual void OnCollisionWithWalls(Collision collision) {

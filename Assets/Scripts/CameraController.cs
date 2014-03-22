@@ -17,6 +17,7 @@ public class CameraController : MonoBehaviour {
 	public float maxRotationHorizontal = 10.0f;
 
 
+
 	// Use this for initialization
 	void Start () {
 	
