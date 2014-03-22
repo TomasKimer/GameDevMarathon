@@ -4,9 +4,12 @@ using System.Collections;
 public class CameraController : MonoBehaviour {
 
 	public PlayerController player;
-	public bool cameraTilt = false;
+	public bool cameraTilt = true;
+	public float tiltRangeX = -4.0f;
+	public float tiltRangeZ = 4.0f;
 
 	private Quaternion originalRotation;
+	private Quaternion currentRotation; // pro navrat z menu
 	private int leftX = -15; 
 	private int rightX = 15;
 	private int topZ = 10;
@@ -39,6 +42,7 @@ public class CameraController : MonoBehaviour {
 		if (isLerpingToGame) {
 			Vector3 dest = player.transform.position + gamePosition;
 			transform.position = Vector3.Lerp(transform.position, dest, 0.2f);
+			camera.transform.rotation = Quaternion.Lerp(camera.transform.rotation, currentRotation, 0.2f);
 
 			// stop
 			if (Vector3.Distance (transform.position, dest) < 0.1) {
@@ -51,6 +55,7 @@ public class CameraController : MonoBehaviour {
 			Vector3 dest = menuPosition;
 			dest.y += menuLevel * 10;
 			transform.position = Vector3.Lerp(transform.position, dest, 0.2f);
+			camera.transform.rotation = Quaternion.Lerp(camera.transform.rotation, originalRotation, 0.2f);
 
 			// stop
 			if (Vector3.Distance (transform.position, dest) < 0.1) {
@@ -62,13 +67,13 @@ public class CameraController : MonoBehaviour {
 		if (followPlayer) {
 			camera.transform.position = new Vector3 (player.transform.position.x, camera.transform.position.y, player.transform.position.z);
 			if (cameraTilt) {
-				float vertAmount = remap(camera.transform.position.x, bottomZ, topZ, -2.5f, 2.5f);
-				float horizAmount = remap(camera.transform.position.y, leftX, rightX, -2.5f, 2.5f);
+				float xAmount = remap(camera.transform.position.x, leftX, rightX, -tiltRangeX, tiltRangeX);
+				float zAmount = remap(camera.transform.position.z, topZ, bottomZ, -tiltRangeZ, tiltRangeZ);
 			
-				camera.transform.LookAt(new Vector3(camera.transform.position.x + vertAmount,
-			                            			1,
-			                                    	camera.transform.position.z + horizAmount),
-			                        	new Vector3(0,0,1));
+				camera.transform.LookAt(new Vector3(camera.transform.position.x + xAmount,
+				                                    1,
+			                                    	camera.transform.position.z + zAmount),
+			                        	new Vector3(0, 0, 1));
 			}
 			else {
 				camera.transform.rotation = originalRotation;
@@ -83,6 +88,7 @@ public class CameraController : MonoBehaviour {
 		isLerpingToGame = false;
 		isLerpingToMenu = true;
 		followPlayer = false;
+		currentRotation = camera.transform.rotation;
 	}
 
 	// presun kamery do herni pozice
