@@ -46,7 +46,7 @@ public class GameController : MonoBehaviour {
 	private float transitionTime = 0;
 
 
-	private long score;
+	public long score;
 	private float timeAlive;
 	
 
@@ -79,10 +79,18 @@ public class GameController : MonoBehaviour {
 		logoText = name;
 
 		// score
-		scoreText = Instantiate (prefabText, new Vector3(-13, 5, 10),  Quaternion.Euler(90, 0, 0)) as TextMesh;
+		scoreText = Instantiate (prefabText, new Vector3(-10, 5, 10),  Quaternion.Euler(90, 0, 0)) as TextMesh;
+		scoreText.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 		scoreText.color = Color.white;
-		scoreText.fontSize = 16;
+		scoreText.fontSize = 100;
 		scoreText.text = score.ToString();
+
+		// time
+		timeText = Instantiate (prefabText, new Vector3(10, 5, 10),  Quaternion.Euler(90, 0, 0)) as TextMesh;
+		timeText.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+		timeText.color = Color.white;
+		timeText.fontSize = 100;
+		timeText.text = "0";
 
 		Reset ();
 
@@ -169,8 +177,18 @@ public class GameController : MonoBehaviour {
 		}
 
 
+		// formatovani casu
+		int msecs = Mathf.FloorToInt((gamePlayTime % 1) * 100);
+		string msecsStr = msecs < 10 ? "0" + msecs.ToString () : msecs.ToString ();
+		int formatTime = Mathf.RoundToInt(gamePlayTime);
+		int mins = Mathf.FloorToInt(formatTime / 60);
+		string minsStr = mins < 10 ? "0" + mins.ToString () : mins.ToString ();
+		int secs = formatTime % 60;
+		string secsStr = secs < 10 ? "0" + secs.ToString () : secs.ToString ();
+		timeText.text = minsStr + ":" + secsStr + ":" + msecsStr;
 
-
+		// update score
+		scoreText.text = score.ToString();
 
 
 		if (!paused) {

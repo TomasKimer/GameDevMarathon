@@ -70,6 +70,10 @@ public class BaseMob : MonoBehaviour {
 			Destroy (collision.gameObject);
 
 			Explosion boom = Instantiate(explosionPrefab, collision.transform.position, Quaternion.Euler(90, 0, 0)) as Explosion;
+
+			GameObject gameCtrlObj = GameObject.Find("GameController");
+			GameController gameCtrl = (GameController) gameCtrlObj.GetComponent(typeof(GameController));
+			gameCtrl.score++;
 		}
 
 
