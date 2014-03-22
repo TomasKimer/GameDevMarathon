@@ -66,7 +66,7 @@ public class GameController : MonoBehaviour {
 		maxSpawnPosZ = 8;
 
 		paused = false;
-		defaultTimeToNextLevel = 10;
+		defaultTimeToNextLevel = 5;
 
 		// zakladni setup sceny - kopie zdi jako dekorace
 		GameObject walls = GameObject.Find ("Walls");
@@ -222,6 +222,7 @@ public class GameController : MonoBehaviour {
 
 		// its time to spawn it
 		if (spawnInProgress && (gamePlayTime > nextSpawn)) {
+			currentWave = Random.Range (0,5);
 			int type = Random.Range(0,6);
 			if (type == 1) SpawnBase();
 			if (type == 2) SpawnRandom();
@@ -318,6 +319,15 @@ public class GameController : MonoBehaviour {
 		if (wave == 0) {
 			SpawnLineFromLeft();
 		}
+		if (wave == 1) {
+			SpawnLineFromRight();
+		}
+		if (wave == 2) {
+			SpawnLineFromDown();
+		}
+		else {
+			SpawnLineFromUp();
+		}
 	}
 
 
@@ -330,6 +340,33 @@ public class GameController : MonoBehaviour {
 			StraightMob mob =  Instantiate(prefabStraightMob) as StraightMob;
 			mob.transform.forward = new Vector3(1, 0, 0);
 			mob.transform.position = new Vector3(-10, 1, i);
+			mob.speed = 5;
+		}
+	}
+
+	private void SpawnLineFromRight() {
+		for (int i = -8; i < 10; i += 2) {
+			StraightMob mob =  Instantiate(prefabStraightMob) as StraightMob;
+			mob.transform.forward = new Vector3(-1, 0, 0);
+			mob.transform.position = new Vector3(10, 1, i);
+			mob.speed = 5;
+		}
+	}
+
+	private void SpawnLineFromUp() {
+		for (int i = -8; i < 10; i += 2) {
+			StraightMob mob =  Instantiate(prefabStraightMob) as StraightMob;
+			mob.transform.forward = new Vector3(0, 0, 1);
+			mob.transform.position = new Vector3(i, 1, -10);
+			mob.speed = 5;
+		}
+	}
+
+	private void SpawnLineFromDown() {
+		for (int i = -8; i < 10; i += 2) {
+			StraightMob mob =  Instantiate(prefabStraightMob) as StraightMob;
+			mob.transform.forward = new Vector3(0, 0, -1);
+			mob.transform.position = new Vector3(i, 1, 10);
 			mob.speed = 5;
 		}
 	}
