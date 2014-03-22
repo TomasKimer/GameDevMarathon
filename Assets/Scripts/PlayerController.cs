@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour {
 
 	public Joystick moveJoystick;
 	public Joystick aimJoystick;
-	public float speed = 15.0f;
+	public float speed = 18.0f;
 
 	public Bullet prefabBullet;
 	private float lastShoot = -11;
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour {
 		Vector3 pos = transform.position;
 		Bullet bullet = Instantiate(prefabBullet, pos, Quaternion.identity) as Bullet;
 		bullet.SetDirection(moveVec);			
-		bullet.speed = 15;
+		bullet.speed = 22;
 
 		lastShoot = Time.realtimeSinceStartup;
 
@@ -109,9 +109,12 @@ public class PlayerController : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision) {
 		if (LayerMask.LayerToName (collision.gameObject.layer) == "mobs") {
-			GameObject obj = GameObject.Find("GameController");
-			GameController ctrl = (GameController) obj.GetComponent("GameController");
-			ctrl.GameOver();
+			BaseMob mob = (BaseMob) collision.gameObject.GetComponent("BaseMob");
+			if (mob.alive) {
+				GameObject obj = GameObject.Find("GameController");
+				GameController ctrl = (GameController) obj.GetComponent("GameController");
+				ctrl.GameOver();
+			}
 		}		
 	}
 
