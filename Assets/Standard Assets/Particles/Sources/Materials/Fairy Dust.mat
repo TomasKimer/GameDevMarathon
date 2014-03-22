@@ -23,11 +23,11 @@ Material:
     m_Floats:
       data:
         first:
-          name: _Shininess
+          name: _InvFade
         second: 1
       data:
         first:
-          name: _InvFade
+          name: _Shininess
         second: 1
     m_Colors:
       data:
