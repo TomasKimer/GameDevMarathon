@@ -19,6 +19,14 @@ public class GameController : MonoBehaviour {
 	private float minSpawnPosZ;
 	private float maxSpawnPosZ;
 
+
+	public enum Screens { moving, welcome, game };
+	private Screens currentScreen = Screens.welcome;
+
+	private TextMesh logoText;
+
+	// ochrana doba pri prechodu mezi obrazovkama
+	private float transitionTime = 0;
 	
 
 
@@ -41,6 +49,11 @@ public class GameController : MonoBehaviour {
 		for (int i = -10; i > -100; i -= 10) {
 			Instantiate(walls, new Vector3(walls.transform.position.x, i, walls.transform.position.z), walls.transform.rotation);
 		}
+
+		// logo
+		prefabText.text = "SHOOT\nSPACE\nTHINGS";
+		TextMesh name =  Instantiate (prefabText, new Vector3 (0, -90, 0), Quaternion.Euler(90, 0, 0)) as TextMesh;
+		logoText = name;
 
 		Reset ();
 
@@ -69,6 +82,40 @@ public class GameController : MonoBehaviour {
 
 
 	void Update () {
+		// odecist ochranu proti nasobnym keypressum
+		transitionTime -= Time.deltaTime;
+
+
+		if (currentScreen == Screens.welcome && transitionTime <= 0) {
+				// esc na welcome --> exit
+				if (Input.GetKeyDown (KeyCode.Escape))  {
+					Application.Quit();
+					return;
+				}
+				
+				// cokoliv jineho --> game
+				if (Input.anyKey || Input.touchCount > 0) {
+					GameScreen();
+				}
+		}
+
+		if (currentScreen == Screens.game && transitionTime <= 0) {
+			if (currentScreen == Screens.game) {
+				if (Input.GetKeyDown (KeyCode.Escape))  {
+					WelcomScreen();
+				}
+			}
+		}
+
+
+
+
+
+
+
+
+		// testing -------------------------
+
 		if (Input.GetKeyDown(KeyCode.Space)) {
 			SpawnWave(0);
 		}
@@ -137,17 +184,29 @@ public class GameController : MonoBehaviour {
 
 
 
+	public void CameraLerpedTo(Screens scr) {
+		currentScreen = scr;
+	}
 
 
 	public void WelcomScreen() {
+		currentScreen = Screens.welcome;
+
 		CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
 		camCtrl.MoveToMenu(0);
 
-		prefabText.text = "SHOOT\nSPACE\nTHINGS";
-		GameObject name = (GameObject) Instantiate (prefabText, new Vector3 (0, -90, 0), Quaternion.Euler(90, 0, 0));
-		TextMesh nameText = (TextMesh)name.GetComponent ("TextMesh");
-
+		transitionTime = 0.2f;
 	}
+
+	public void GameScreen() {
+		currentScreen = Screens.game;
+		
+		CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
+		camCtrl.MoveToGame();
+
+		transitionTime = 0.2f;
+	}
+
 
 
 	public void GameOver() {
@@ -173,8 +232,9 @@ public class GameController : MonoBehaviour {
 				Reset();
 			}
 		}
-	}
 
+		GUI.Label(new Rect(1, 200, 100, 100), new GUIContent("menu transition: " + transitionTime));
+	}
 
 	
 

@@ -54,7 +54,8 @@ public class CameraController : MonoBehaviour {
 
 			// stop
 			if (Vector3.Distance (transform.position, dest) < 0.1) {
-				isLerpingToGame = false;
+				isLerpingToMenu = false;
+				followPlayer = false;
 			}
 		} 
 
