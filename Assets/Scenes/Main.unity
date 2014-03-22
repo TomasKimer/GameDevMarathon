@@ -561,10 +561,6 @@ MonoBehaviour:
   prefabFollowerMob: {fileID: 11400000, guid: 6b19948755d3d60408ae513c16b7ef4f, type: 2}
   prefabText: {fileID: 10200000, guid: d65f762646f8d3048998f2715ed38143, type: 2}
   player: {fileID: 1691133158}
-  minSpawnPosX: -10
-  maxSpawnPosX: 10
-  minSpawnPosZ: -22
-  maxSpawnPosZ: 7
 --- !u!4 &1429962865
 Transform:
   m_ObjectHideFlags: 0

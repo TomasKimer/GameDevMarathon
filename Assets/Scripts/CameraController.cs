@@ -34,10 +34,11 @@ public class CameraController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (isLerpingToGame) {
-			transform.position = Vector3.Lerp(transform.position, player.transform.position + gamePosition, 0.2f);
+			Vector3 dest = player.transform.position + gamePosition;
+			transform.position = Vector3.Lerp(transform.position, dest, 0.2f);
 
 			// stop
-			if (Vector3.Distance (transform.position, gamePosition) < 0.1) {
+			if (Vector3.Distance (transform.position, dest) < 0.1) {
 				isLerpingToGame = false;
 				followPlayer = true;
 			}

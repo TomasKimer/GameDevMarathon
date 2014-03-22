@@ -42,9 +42,11 @@ public class GameController : MonoBehaviour {
 			Instantiate(walls, new Vector3(walls.transform.position.x, i, walls.transform.position.z), walls.transform.rotation);
 		}
 
-
-
 		Reset ();
+
+		// init kamery
+		CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
+		camCtrl.MoveToGame();
 	}
 
 
