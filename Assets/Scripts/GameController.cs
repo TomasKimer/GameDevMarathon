@@ -49,6 +49,9 @@ public class GameController : MonoBehaviour {
 
 	public long score;
 	private float timeAlive;
+
+	// priznak ze hrac na death screenu uz pustil prsty
+	private bool touchedUpOnDeath = false;
 	
 
 
@@ -177,7 +180,7 @@ public class GameController : MonoBehaviour {
 			}
 
 			// dead --> restart
-			if (Input.GetKeyDown(KeyCode.Space) || Input.touchCount > 0) {
+			if (Input.GetKeyDown(KeyCode.Space) || (Input.touchCount > 0 && touchedUpOnDeath)) {
 				Reset();
 				GameScreen();
 			}
@@ -474,6 +477,8 @@ public class GameController : MonoBehaviour {
 
 			// zamerne bez pause, jen player
 			player.disableControls = true;
+
+			touchedUpOnDeath = false;
 
 			currentScreen = Screens.gameOver;
 
