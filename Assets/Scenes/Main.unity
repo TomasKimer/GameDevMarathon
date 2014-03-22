@@ -796,7 +796,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1691133158}
-  cameraTilt: 0
+  cameraTilt: 1
+  tiltRangeX: -4
+  tiltRangeZ: 4
 --- !u!1001 &1623792289
 Prefab:
   m_ObjectHideFlags: 0
