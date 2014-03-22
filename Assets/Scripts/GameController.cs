@@ -6,10 +6,14 @@ public class GameController : MonoBehaviour {
 
 	private int currentWave;
 	private float gamePlayTime;
+	private float timeToNextLevel;
+	private float defaultTimeToNextLevel;
 
 	private float minSpawnInterval;
 	private float maxSpawnInterval;
 	private float nextSpawn;
+	private int minMobs;
+	private bool spawnInProgress;
 
 	private bool paused;
 
@@ -53,6 +57,7 @@ public class GameController : MonoBehaviour {
 		maxSpawnPosZ = 8;
 
 		paused = false;
+		defaultTimeToNextLevel = 10;
 
 		// zakladni setup sceny - kopie zdi jako dekorace
 		GameObject walls = GameObject.Find ("Walls");
@@ -75,9 +80,12 @@ public class GameController : MonoBehaviour {
 	void Reset() {
 		gamePlayTime = 0.0f;
 		
-		minSpawnInterval = 1f;
-		maxSpawnInterval = 7f;
+		minSpawnInterval = 0f;
+		maxSpawnInterval = 2f;
 		nextSpawn = Random.Range (minSpawnInterval, maxSpawnInterval);
+		minMobs = 3;
+		spawnInProgress = true;
+		timeToNextLevel = defaultTimeToNextLevel;
 
 		currentWave = 0;
 		showGameOver = false;
@@ -124,23 +132,34 @@ public class GameController : MonoBehaviour {
 		}
 
 
-		if (!paused) 
+		if (!paused) {
 			gamePlayTime += Time.deltaTime;
-		
-		if (gamePlayTime > nextSpawn) {
+		    timeToNextLevel -= Time.deltaTime;
+		}
+
+		if (timeToNextLevel < 0) {
+			timeToNextLevel = defaultTimeToNextLevel;
+			minMobs++;
+		}
+
+		// ready to spawn new mob after slight pause
+		if (!spawnInProgress) {
+			Object[] mobs = GameObject.FindObjectsOfType (typeof(BaseMob));
+			if (mobs.Length < minMobs) {
+				nextSpawn += Random.Range (minSpawnInterval, maxSpawnInterval);
+				spawnInProgress = true;
+			}
+		}
+
+		// its time to spawn it
+		if (spawnInProgress && (gamePlayTime > nextSpawn)) {
 			int type = Random.Range(0,5);
 			if (type == 1) SpawnBase();
 			if (type == 2) SpawnRandom();
 			if (type == 3) SpawnFollower();
 			if (type == 4) SpawnWave(currentWave);
-			
-			nextSpawn += Random.Range (minSpawnInterval, maxSpawnInterval);
+			spawnInProgress = false;
 		}
-
-
-
-
-
 
 
 		// testing -------------------------
