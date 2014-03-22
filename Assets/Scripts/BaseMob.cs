@@ -69,7 +69,7 @@ public class BaseMob : MonoBehaviour {
 			Destroy(this.gameObject);
 			Destroy (collision.gameObject);
 
-
+			Explosion boom = Instantiate(explosionPrefab, collision.transform.position, Quaternion.Euler(90, 0, 0)) as Explosion;
 		}
 
 

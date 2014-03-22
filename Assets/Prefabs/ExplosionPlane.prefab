@@ -44,7 +44,7 @@ Transform:
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: .715378046, y: 0, z: 0, w: .698737681}
   m_LocalPosition: {x: -4.09482527, y: -.0812966749, z: -4.80399227}
-  m_LocalScale: {x: .200000003, y: .200000003, z: 1}
+  m_LocalScale: {x: .5, y: .5, z: 1}
   m_Children:
   - {fileID: 400002}
   m_Father: {fileID: 0}
@@ -98,8 +98,8 @@ EllipsoidParticleEmitter:
   serializedVersion: 2
   m_Enabled: 1
   m_Emit: 1
-  minSize: .0199999996
-  maxSize: .0500000007
+  minSize: .200000003
+  maxSize: .5
   minEnergy: .100000001
   maxEnergy: 1.5
   minEmission: 200
@@ -108,7 +108,7 @@ EllipsoidParticleEmitter:
   localVelocity: {x: 0, y: 0, z: 0}
   rndVelocity: {x: 0, y: 0, z: 0}
   emitterVelocityScale: 0
-  tangentVelocity: {x: 2, y: 2, z: 0}
+  tangentVelocity: {x: 2, y: 2, z: 2}
   angularVelocity: 0
   rndAngularVelocity: 0
   rndRotation: 0
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 280bc9a676e6cdd42b66f1c201083c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 5
   duration: 1
 --- !u!1001 &100100000
 Prefab:
