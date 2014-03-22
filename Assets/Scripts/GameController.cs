@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour {
 
 	public StraightMob prefabStraightMob;
 	public BaseMob prefabBaseMob;
+	public RandomMob prefabRandomMob;
 	public FollowerMob prefabFollowerMob;
 	public TextMesh prefabText;
 
@@ -30,10 +31,10 @@ public class GameController : MonoBehaviour {
 			Destroy(joy);
 		}
 
-		minSpawnPosX = -7;
-		maxSpawnPosX = 16;
-		minSpawnPosZ = -6;
-		maxSpawnPosZ = 10;
+		minSpawnPosX = -11;
+		maxSpawnPosX = 11;
+		minSpawnPosZ = -8;
+		maxSpawnPosZ = 8;
 
 
 		// zakladni setup sceny - kopie zdi jako dekorace
@@ -45,8 +46,7 @@ public class GameController : MonoBehaviour {
 		Reset ();
 
 		// init kamery
-		CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
-		camCtrl.MoveToGame();
+		WelcomScreen ();
 	}
 
 
@@ -71,7 +71,7 @@ public class GameController : MonoBehaviour {
 
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Space)) {
-			SpawnWave(0);
+			SpawnRandom();
 		}
 
 		// testovani kamery
@@ -81,7 +81,7 @@ public class GameController : MonoBehaviour {
 		}
 		if (Input.GetKeyDown (KeyCode.M)) {
 			CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
-			camCtrl.MoveToMenu();
+			camCtrl.MoveToMenu(0);
 		}
 	}
 
@@ -116,6 +116,21 @@ public class GameController : MonoBehaviour {
 
 		}
 
+	private void SpawnRandom() {
+		RandomMob fm = Instantiate (prefabRandomMob) as RandomMob;
+		Vector3 spawnpos = Vector3.zero;
+		while (true) {
+			spawnpos = new Vector3((float)Random.Range (minSpawnPosX,maxSpawnPosX), 1, (float)Random.Range(minSpawnPosZ, maxSpawnPosZ));
+			if (Vector3.Distance(spawnpos, player.transform.position) > 3 )
+				break;
+		}
+		
+		fm.transform.position = spawnpos;
+		
+		fm.speed = 5;
+		
+	}
+
 	private void SpawnWave(int wave) {
 		if (wave == 0) {
 			SpawnLineFromLeft();
@@ -131,7 +146,7 @@ public class GameController : MonoBehaviour {
 		for (int i = -8; i < 10; i += 2) {
 			StraightMob mob =  Instantiate(prefabStraightMob) as StraightMob;
 			mob.transform.forward = new Vector3(1, 0, 0);
-			mob.transform.position = new Vector3(-8, 1, i);
+			mob.transform.position = new Vector3(-10, 1, i);
 			mob.speed = 5;
 		}
 	}
@@ -141,6 +156,12 @@ public class GameController : MonoBehaviour {
 
 
 	public void WelcomScreen() {
+		CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
+		camCtrl.MoveToMenu(0);
+
+		prefabText.text = "SHOOT\nSPACE\nTHINGS";
+		GameObject name = (GameObject) Instantiate (prefabText, new Vector3 (0, -90, 0), Quaternion.Euler(90, 0, 0));
+		TextMesh nameText = (TextMesh)name.GetComponent ("TextMesh");
 
 	}
 
