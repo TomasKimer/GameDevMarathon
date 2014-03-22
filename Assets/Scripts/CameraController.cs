@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour {
 	// pokud jsme v menu, nechceme sledovat hrace
 	private bool followPlayer = false;
 
-	private Vector3 gamePosition = new Vector3(0, 19, -5);
+	private Vector3 gamePosition = new Vector3(0, 20, 0);
 	private Vector3 menuPosition = new Vector3(2, -5, 0);
 
 	private bool isLerpingToGame = false;
@@ -34,21 +34,26 @@ public class CameraController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (isLerpingToGame) {
-			transform.position = Vector3.Lerp(transform.position, gamePosition, 0.2f);
+			transform.position = Vector3.Lerp(transform.position, player.transform.position + gamePosition, 0.2f);
 
 			// stop
 			if (Vector3.Distance (transform.position, gamePosition) < 0.1) {
 				isLerpingToGame = false;
+				followPlayer = true;
 			}
-		} else if (isLerpingToMenu) {
+		}
+
+		if (isLerpingToMenu) {
 			transform.position = Vector3.Lerp(transform.position, menuPosition, 0.2f);
 
 			// stop
 			if (Vector3.Distance (transform.position, menuPosition) < 0.1) {
 				isLerpingToGame = false;
 			}
-		} else if (followPlayer) {
-				camera.transform.position = new Vector3 (player.transform.position.x, camera.transform.position.y, player.transform.position.z);
+		} 
+
+		if (followPlayer) {
+			camera.transform.position = new Vector3 (player.transform.position.x, camera.transform.position.y, player.transform.position.z);
 		}
 
 		// x - up/down
@@ -77,12 +82,14 @@ public class CameraController : MonoBehaviour {
 	public void MoveToMenu() {
 		isLerpingToGame = false;
 		isLerpingToMenu = true;
+		followPlayer = false;
 	}
 
 	// presun kamery do herni pozice
 	public void MoveToGame() {
 		isLerpingToMenu = false;
 		isLerpingToGame = true;
+		followPlayer = false;
 	}
 
 
