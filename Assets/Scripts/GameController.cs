@@ -7,7 +7,6 @@ public class GameController : MonoBehaviour {
 	private int currentWave;
 	private bool showGameOver = false;
 
-
 	public StraightMob prefabStraightMob;
 	public BaseMob prefabBaseMob;
 	public FollowerMob prefabFollowerMob;
@@ -43,9 +42,11 @@ public class GameController : MonoBehaviour {
 			Instantiate(walls, new Vector3(walls.transform.position.x, i, walls.transform.position.z), walls.transform.rotation);
 		}
 
-
-
 		Reset ();
+
+		// init kamery
+		CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
+		camCtrl.MoveToGame();
 	}
 
 
@@ -71,6 +72,16 @@ public class GameController : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Space)) {
 			SpawnWave(0);
+		}
+
+		// testovani kamery
+		if (Input.GetKeyDown (KeyCode.G)) {
+			CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
+			camCtrl.MoveToGame();
+		}
+		if (Input.GetKeyDown (KeyCode.M)) {
+			CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
+			camCtrl.MoveToMenu();
 		}
 	}
 
@@ -128,6 +139,10 @@ public class GameController : MonoBehaviour {
 
 
 
+
+	public void WelcomScreen() {
+
+	}
 
 
 	public void GameOver() {

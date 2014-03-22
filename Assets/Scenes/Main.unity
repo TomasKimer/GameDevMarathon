@@ -234,7 +234,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1146261086}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.03165054, y: 1, z: 1.81423473}
+  m_LocalPosition: {x: 2.75921869, y: 1, z: 0}
   m_LocalScale: {x: .699999988, y: .699999988, z: .699999988}
   m_Children:
   - {fileID: 1259465540}
@@ -561,10 +561,6 @@ MonoBehaviour:
   prefabFollowerMob: {fileID: 11400000, guid: 6b19948755d3d60408ae513c16b7ef4f, type: 2}
   prefabText: {fileID: 10200000, guid: d65f762646f8d3048998f2715ed38143, type: 2}
   player: {fileID: 1691133158}
-  minSpawnPosX: -10
-  maxSpawnPosX: 10
-  minSpawnPosZ: -22
-  maxSpawnPosZ: 7
 --- !u!4 &1429962865
 Transform:
   m_ObjectHideFlags: 0
@@ -782,8 +778,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1600254572}
-  m_LocalRotation: {x: .623922884, y: 0, z: 0, w: .781485975}
-  m_LocalPosition: {x: 0, y: 19.0264969, z: -5.14990664}
+  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
+  m_LocalPosition: {x: 0, y: 20, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
