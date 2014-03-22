@@ -98,9 +98,10 @@ public class CameraController : MonoBehaviour {
 		followPlayer = false;
 	}
 
-
+	/*
 	void OnGUI () {
 		GUI.Label(new Rect(1, 1, 100, 100), new GUIContent("lerp to menu: " + isLerpingToMenu));
 		GUI.Label(new Rect(1, 100, 100, 100), new GUIContent("lerp to game: " + isLerpingToGame));
 	}
+	*/
 }
