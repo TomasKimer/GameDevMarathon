@@ -12,6 +12,9 @@ public class FollowerMob : BaseMob {
 		Vector3 myPos = Vector3.zero;
 		myPos = gameObject.transform.position;
 		velocity = (playerPos - myPos);
+		float randomX = Random.Range (0, 1);
+		float randomZ = Random.Range (0, 1);
+		velocity = new Vector3 (velocity.x + randomX, velocity.y, velocity.z + randomZ);
 		gameObject.transform.Translate (velocity * Time.deltaTime, Space.World);
 		gameObject.transform.Rotate (new Vector3 (0, 360, 0) * Time.deltaTime);
 		
