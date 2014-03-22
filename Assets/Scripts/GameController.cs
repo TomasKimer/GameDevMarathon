@@ -11,6 +11,8 @@ public class GameController : MonoBehaviour {
 	private float maxSpawnInterval;
 	private float nextSpawn;
 
+	private bool paused;
+
 	private bool showGameOver = false;
 
 	public StraightMob prefabStraightMob;
@@ -49,6 +51,8 @@ public class GameController : MonoBehaviour {
 		maxSpawnPosX = 11;
 		minSpawnPosZ = -8;
 		maxSpawnPosZ = 8;
+
+		paused = false;
 
 		// zakladni setup sceny - kopie zdi jako dekorace
 		GameObject walls = GameObject.Find ("Walls");
@@ -120,8 +124,8 @@ public class GameController : MonoBehaviour {
 		}
 
 
-
-		gamePlayTime += Time.deltaTime;
+		if (!paused) 
+			gamePlayTime += Time.deltaTime;
 		
 		if (gamePlayTime > nextSpawn) {
 			int type = Random.Range(0,5);
@@ -153,6 +157,10 @@ public class GameController : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.M)) {
 			CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
 			camCtrl.MoveToMenu(0);
+		}
+		if (Input.GetKeyDown (KeyCode.P)) {
+			CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
+			camCtrl.MoveToGame();
 		}
 	}
 
@@ -231,11 +239,23 @@ public class GameController : MonoBehaviour {
 
 
 	public void Pause() {
+		paused = true;
+
+		Object[] mobs = GameObject.FindObjectsOfType (typeof(BaseMob));
+		foreach (BaseMob mob in mobs) {
+			mob.paused = true;
+		}
 
 	}
 
 	public void Resume() {
+		paused = false;
 
+		Object[] mobs = GameObject.FindObjectsOfType (typeof(BaseMob));
+		foreach (BaseMob mob in mobs) {
+			Destroy(mob.gameObject);
+			mob.paused = false;
+		}
 	}
 
 
