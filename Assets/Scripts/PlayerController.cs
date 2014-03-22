@@ -36,11 +36,6 @@ public class PlayerController : MonoBehaviour {
 		gameObject.rigidbody.velocity = Vector3.zero;
 		gameObject.rigidbody.angularVelocity = Vector3.zero;
 
-		// Back button.
-		if (Input.GetKeyDown(KeyCode.Escape))
-			Application.Quit();
-
-
 		// WSAD - move
 		if (!disableControls && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) ||
 		    Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))) {

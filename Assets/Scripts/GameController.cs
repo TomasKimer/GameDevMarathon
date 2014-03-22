@@ -121,29 +121,25 @@ public class GameController : MonoBehaviour {
 
 
 
-
-
-
-
-
-		// testing -------------------------
-
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			SpawnWave (0);
-		}
-
-
 		gamePlayTime += Time.deltaTime;
-
+		
 		if (gamePlayTime > nextSpawn) {
 			int type = Random.Range(0,5);
 			if (type == 1) SpawnBase();
 			if (type == 2) SpawnRandom();
 			if (type == 3) SpawnFollower();
 			if (type == 4) SpawnWave(currentWave);
-
+			
 			nextSpawn += Random.Range (minSpawnInterval, maxSpawnInterval);
 		}
+
+
+
+
+
+
+
+		// testing -------------------------
 
 		//if (Input.GetKeyDown(KeyCode.Space)) {
 		//	SpawnRandom();
@@ -230,6 +226,16 @@ public class GameController : MonoBehaviour {
 
 	public void CameraLerpedTo(Screens scr) {
 		currentScreen = scr;
+	}
+
+
+
+	public void Pause() {
+
+	}
+
+	public void Resume() {
+
 	}
 
 
