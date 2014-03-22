@@ -188,9 +188,12 @@ public class GameController : MonoBehaviour {
 
 
 		// formatovani casu
-		int msecs = Mathf.FloorToInt((gamePlayTime % 1) * 100);
+		if (currentScreen == Screens.game) {
+			timeAlive = gamePlayTime;
+		}
+		int msecs = Mathf.FloorToInt((timeAlive % 1) * 100);
 		string msecsStr = msecs < 10 ? "0" + msecs.ToString () : msecs.ToString ();
-		int formatTime = Mathf.RoundToInt(gamePlayTime);
+		int formatTime = Mathf.RoundToInt(timeAlive);
 		int mins = Mathf.FloorToInt(formatTime / 60);
 		string minsStr = mins < 10 ? "0" + mins.ToString () : mins.ToString ();
 		int secs = formatTime % 60;
