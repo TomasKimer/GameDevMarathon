@@ -159,8 +159,8 @@ public class GameController : MonoBehaviour {
 			camCtrl.MoveToMenu(0);
 		}
 		if (Input.GetKeyDown (KeyCode.P)) {
-			CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
-			camCtrl.MoveToGame();
+			if (paused) Resume();
+			else Pause();
 		}
 	}
 
@@ -246,6 +246,13 @@ public class GameController : MonoBehaviour {
 			mob.paused = true;
 		}
 
+		Object[] bullets = Object.FindObjectsOfType (typeof(Bullet));
+		foreach (Bullet bullet in bullets) {
+			bullet.paused = true;
+		}
+
+		player.disableControls = true;
+
 	}
 
 	public void Resume() {
@@ -253,9 +260,15 @@ public class GameController : MonoBehaviour {
 
 		Object[] mobs = GameObject.FindObjectsOfType (typeof(BaseMob));
 		foreach (BaseMob mob in mobs) {
-			Destroy(mob.gameObject);
 			mob.paused = false;
 		}
+
+		Object[] bullets = Object.FindObjectsOfType (typeof(Bullet));
+		foreach (Bullet bullet in bullets) {
+			bullet.paused = false;
+		}
+
+		player.disableControls = false;
 	}
 
 
