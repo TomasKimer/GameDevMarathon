@@ -17,8 +17,6 @@ public class GameController : MonoBehaviour {
 
 	private bool paused;
 
-	private bool showGameOver = false;
-
 	public StraightMob prefabStraightMob;
 	public BaseMob prefabBaseMob;
 	public RandomMob prefabRandomMob;
@@ -33,10 +31,12 @@ public class GameController : MonoBehaviour {
 	private float maxSpawnPosZ;
 
 
-	public enum Screens { moving, welcome, game };
+	public enum Screens { moving, welcome, pause, gameOver, game };
 	private Screens currentScreen = Screens.welcome;
 
 	private TextMesh logoText;
+	private TextMesh pauseText;
+	private TextMesh gameOverText;
 
 	// ochrana doba pri prechodu mezi obrazovkama
 	private float transitionTime = 0;
@@ -88,7 +88,6 @@ public class GameController : MonoBehaviour {
 		timeToNextLevel = defaultTimeToNextLevel;
 
 		currentWave = 0;
-		showGameOver = false;
 		player.transform.position = new Vector3(0, 1, 0);
 		player.transform.rotation = Quaternion.identity;
 		player.disableControls = false;
@@ -109,7 +108,7 @@ public class GameController : MonoBehaviour {
 		// odecist ochranu proti nasobnym keypressum
 		transitionTime -= Time.deltaTime;
 
-
+		// welcome
 		if (currentScreen == Screens.welcome && transitionTime <= 0) {
 				// esc na welcome --> exit
 				if (Input.GetKeyDown (KeyCode.Escape))  {
@@ -123,13 +122,38 @@ public class GameController : MonoBehaviour {
 				}
 		}
 
+		// game --> pause
 		if (currentScreen == Screens.game && transitionTime <= 0) {
-			if (currentScreen == Screens.game) {
-				if (Input.GetKeyDown (KeyCode.Escape))  {
-					WelcomScreen();
-				}
+			if (Input.GetKeyDown (KeyCode.Escape))  {
+				PauseScreen();
 			}
 		}
+
+		// pause --> resume
+		if (currentScreen == Screens.pause && transitionTime <= 0) {
+			if (Input.GetKeyDown (KeyCode.Escape))  {
+				GameScreen();
+			}
+		}
+
+		// dead
+		if (currentScreen == Screens.gameOver && transitionTime <= 0) {
+			// dead --> welcome
+			if (Input.GetKeyDown(KeyCode.Escape)){
+				Reset ();
+				WelcomScreen();
+			}
+
+			// dead --> restart
+			if (Input.GetKeyDown(KeyCode.Space)) {
+				Reset();
+				GameScreen();
+			}
+		}
+
+
+
+
 
 
 		if (!paused) {
@@ -277,17 +301,30 @@ public class GameController : MonoBehaviour {
 	public void Resume() {
 		paused = false;
 
+		// zastavit moby
 		Object[] mobs = GameObject.FindObjectsOfType (typeof(BaseMob));
 		foreach (BaseMob mob in mobs) {
 			mob.paused = false;
 		}
 
+		// zastavit kulky
 		Object[] bullets = Object.FindObjectsOfType (typeof(Bullet));
 		foreach (Bullet bullet in bullets) {
 			bullet.paused = false;
 		}
 
+		// zastavit hrace
 		player.disableControls = false;
+
+		// zrusit pripadny pause text
+		if (pauseText != null) {
+			Destroy(pauseText.gameObject);
+		}
+
+		// zrusit pripadny dead text
+		if (gameOverText != null) {
+			Destroy(gameOverText.gameObject);
+		}
 	}
 
 
@@ -317,15 +354,41 @@ public class GameController : MonoBehaviour {
 		logoText.renderer.enabled = false;
 	}
 
+	public void PauseScreen() {
+		Pause ();
+		
+		currentScreen = Screens.pause;
+		
+		CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
+		camCtrl.MoveToMenu(4);
+		
+		transitionTime = 0.2f;
+		
+		prefabText.text = "PAUSED";
+		pauseText = Instantiate (prefabText, new Vector3(0, -50, 0), Quaternion.Euler(90, 0, 0)) as TextMesh;
+	}
+	
+	public void GameOverScreen() {
+		// event muze prijit vicekrat
+		if (currentScreen != Screens.gameOver) {
 
+			// zamerne bez pause, jen player
+			player.disableControls = true;
 
-	public void GameOver() {
-		showGameOver = true;
-		player.disableControls = true;
+			currentScreen = Screens.gameOver;
+
+			prefabText.text = "GAME OVER";
+			gameOverText = Instantiate (prefabText, new Vector3 (0, -20, 0), Quaternion.Euler (90, 0, 0)) as TextMesh;
+			gameOverText.fontSize = 30;
+		}
 	}
 
 
+
+
+
 	void OnGUI () {
+		/*
 		if (showGameOver) {
 			int boxW = 535;
 			int boxH = 109;
@@ -342,8 +405,7 @@ public class GameController : MonoBehaviour {
 				Reset();
 			}
 		}
-
-		GUI.Label(new Rect(1, 200, 100, 100), new GUIContent("menu transition: " + transitionTime));
+		*/
 	}
 
 	

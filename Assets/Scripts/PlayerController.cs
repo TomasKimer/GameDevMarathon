@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour {
 			if (mob.alive) {
 				GameObject obj = GameObject.Find("GameController");
 				GameController ctrl = (GameController) obj.GetComponent("GameController");
-				ctrl.GameOver();
+				ctrl.GameOverScreen();
 			}
 		}		
 	}
