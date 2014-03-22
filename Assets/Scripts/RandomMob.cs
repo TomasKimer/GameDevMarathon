@@ -3,11 +3,6 @@ using System.Collections;
 
 public class RandomMob : BaseMob {
 
-	public float yAngle = 10;
-	public float speed = 10;
-	private float orientation = 1;
-	private Vector3 velocity;
-	
 	protected override void UpdateVelocity () {
 		gameObject.transform.position = new Vector3 (gameObject.transform.position.x, 1, gameObject.transform.position.z);
 
