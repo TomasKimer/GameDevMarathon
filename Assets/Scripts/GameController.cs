@@ -6,14 +6,16 @@ public class GameController : MonoBehaviour {
 
 	private int currentWave;
 	private float gamePlayTime;
+	private float timeToNextLevel;
+	private float defaultTimeToNextLevel;
 
 	private float minSpawnInterval;
 	private float maxSpawnInterval;
 	private float nextSpawn;
+	private int minMobs;
+	private bool spawnInProgress;
 
 	private bool paused;
-
-	private bool showGameOver = false;
 
 	public StraightMob prefabStraightMob;
 	public BaseMob prefabBaseMob;
@@ -29,11 +31,12 @@ public class GameController : MonoBehaviour {
 	private float maxSpawnPosZ;
 
 
-	public enum Screens { moving, welcome, pause, game };
+	public enum Screens { moving, welcome, pause, gameOver, game };
 	private Screens currentScreen = Screens.welcome;
 
 	private TextMesh logoText;
 	private TextMesh pauseText;
+	private TextMesh gameOverText;
 
 	// ochrana doba pri prechodu mezi obrazovkama
 	private float transitionTime = 0;
@@ -54,6 +57,7 @@ public class GameController : MonoBehaviour {
 		maxSpawnPosZ = 8;
 
 		paused = false;
+		defaultTimeToNextLevel = 10;
 
 		// zakladni setup sceny - kopie zdi jako dekorace
 		GameObject walls = GameObject.Find ("Walls");
@@ -76,12 +80,14 @@ public class GameController : MonoBehaviour {
 	void Reset() {
 		gamePlayTime = 0.0f;
 		
-		minSpawnInterval = 1f;
-		maxSpawnInterval = 7f;
+		minSpawnInterval = 0f;
+		maxSpawnInterval = 2f;
 		nextSpawn = Random.Range (minSpawnInterval, maxSpawnInterval);
+		minMobs = 3;
+		spawnInProgress = true;
+		timeToNextLevel = defaultTimeToNextLevel;
 
 		currentWave = 0;
-		showGameOver = false;
 		player.transform.position = new Vector3(0, 1, 0);
 		player.transform.rotation = Quaternion.identity;
 		player.disableControls = false;
@@ -102,7 +108,7 @@ public class GameController : MonoBehaviour {
 		// odecist ochranu proti nasobnym keypressum
 		transitionTime -= Time.deltaTime;
 
-
+		// welcome
 		if (currentScreen == Screens.welcome && transitionTime <= 0) {
 				// esc na welcome --> exit
 				if (Input.GetKeyDown (KeyCode.Escape))  {
@@ -116,36 +122,68 @@ public class GameController : MonoBehaviour {
 				}
 		}
 
+		// game --> pause
 		if (currentScreen == Screens.game && transitionTime <= 0) {
 			if (Input.GetKeyDown (KeyCode.Escape))  {
 				PauseScreen();
 			}
 		}
 
+		// pause --> resume
 		if (currentScreen == Screens.pause && transitionTime <= 0) {
 			if (Input.GetKeyDown (KeyCode.Escape))  {
 				GameScreen();
 			}
 		}
 
+		// dead
+		if (currentScreen == Screens.gameOver && transitionTime <= 0) {
+			// dead --> welcome
+			if (Input.GetKeyDown(KeyCode.Escape)){
+				Reset ();
+				WelcomScreen();
+			}
 
-		if (!paused) 
-			gamePlayTime += Time.deltaTime;
-		
-		if (gamePlayTime > nextSpawn) {
-			int type = Random.Range(0,5);
-			if (type == 1) SpawnBase();
-			if (type == 2) SpawnRandom();
-			if (type == 3) SpawnFollower();
-			if (type == 4) SpawnWave(currentWave);
-			
-			nextSpawn += Random.Range (minSpawnInterval, maxSpawnInterval);
+			// dead --> restart
+			if (Input.GetKeyDown(KeyCode.Space)) {
+				Reset();
+				GameScreen();
+			}
 		}
 
 
 
 
 
+
+		if (!paused) {
+			gamePlayTime += Time.deltaTime;
+		    timeToNextLevel -= Time.deltaTime;
+		}
+
+		if (timeToNextLevel < 0) {
+			timeToNextLevel = defaultTimeToNextLevel;
+			minMobs++;
+		}
+
+		// ready to spawn new mob after slight pause
+		if (!spawnInProgress) {
+			Object[] mobs = GameObject.FindObjectsOfType (typeof(BaseMob));
+			if (mobs.Length < minMobs) {
+				nextSpawn += Random.Range (minSpawnInterval, maxSpawnInterval);
+				spawnInProgress = true;
+			}
+		}
+
+		// its time to spawn it
+		if (spawnInProgress && (gamePlayTime > nextSpawn)) {
+			int type = Random.Range(0,5);
+			if (type == 1) SpawnBase();
+			if (type == 2) SpawnRandom();
+			if (type == 3) SpawnFollower();
+			if (type == 4) SpawnWave(currentWave);
+			spawnInProgress = false;
+		}
 
 
 		// testing -------------------------
@@ -278,9 +316,14 @@ public class GameController : MonoBehaviour {
 		// zastavit hrace
 		player.disableControls = false;
 
-		// zrusit pause text
+		// zrusit pripadny pause text
 		if (pauseText != null) {
 			Destroy(pauseText.gameObject);
+		}
+
+		// zrusit pripadny dead text
+		if (gameOverText != null) {
+			Destroy(gameOverText.gameObject);
 		}
 	}
 
@@ -325,17 +368,27 @@ public class GameController : MonoBehaviour {
 		pauseText = Instantiate (prefabText, new Vector3(0, -50, 0), Quaternion.Euler(90, 0, 0)) as TextMesh;
 	}
 	
+	public void GameOverScreen() {
+		// event muze prijit vicekrat
+		if (currentScreen != Screens.gameOver) {
 
+			// zamerne bez pause, jen player
+			player.disableControls = true;
 
+			currentScreen = Screens.gameOver;
 
-
-	public void GameOver() {
-		showGameOver = true;
-		player.disableControls = true;
+			prefabText.text = "GAME OVER";
+			gameOverText = Instantiate (prefabText, new Vector3 (0, -20, 0), Quaternion.Euler (90, 0, 0)) as TextMesh;
+			gameOverText.fontSize = 30;
+		}
 	}
 
 
+
+
+
 	void OnGUI () {
+		/*
 		if (showGameOver) {
 			int boxW = 535;
 			int boxH = 109;
@@ -352,8 +405,7 @@ public class GameController : MonoBehaviour {
 				Reset();
 			}
 		}
-
-		GUI.Label(new Rect(1, 200, 100, 100), new GUIContent("menu transition: " + transitionTime));
+		*/
 	}
 
 	
