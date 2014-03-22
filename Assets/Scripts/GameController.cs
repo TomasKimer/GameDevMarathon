@@ -71,7 +71,7 @@ public class GameController : MonoBehaviour {
 
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Space)) {
-			SpawnFollower();
+			SpawnWave(0);
 		}
 
 		// testovani kamery
@@ -101,6 +101,20 @@ public class GameController : MonoBehaviour {
 
 
 
+	private void SpawnBase() {
+		BaseMob fm = Instantiate (prefabBaseMob) as BaseMob;
+		Vector3 spawnpos = Vector3.zero;
+		while (true) {
+			spawnpos = new Vector3((float)Random.Range (minSpawnPosX,maxSpawnPosX), 1, (float)Random.Range(minSpawnPosZ, maxSpawnPosZ));
+			if (Vector3.Distance(spawnpos, player.transform.position) > 3 )
+				break;
+		}
+		
+		fm.transform.position = spawnpos;
+		
+		fm.speed = 5;
+
+		}
 
 	private void SpawnWave(int wave) {
 		if (wave == 0) {
