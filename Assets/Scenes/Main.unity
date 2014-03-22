@@ -795,14 +795,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1691133158}
-  leftX: -27
-  rightX: 13
-  topZ: 8
-  bottomZ: -29
-  minRotationVertical: 67
-  maxRotationVertical: 87
-  minRotationHorizontal: -10
-  maxRotationHorizontal: 10
+  cameraTilt: 0
 --- !u!1001 &1623792289
 Prefab:
   m_ObjectHideFlags: 0

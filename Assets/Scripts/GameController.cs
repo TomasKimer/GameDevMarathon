@@ -45,8 +45,7 @@ public class GameController : MonoBehaviour {
 		Reset ();
 
 		// init kamery
-		CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
-		camCtrl.MoveToGame();
+		WelcomScreen ();
 	}
 
 
@@ -141,6 +140,12 @@ public class GameController : MonoBehaviour {
 
 
 	public void WelcomScreen() {
+		CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
+		camCtrl.MoveToMenu(0);
+
+		prefabText.text = "SHOOT\nSPACE\nTHINGS";
+		GameObject name = (GameObject) Instantiate (prefabText, new Vector3 (0, -90, 0), Quaternion.Euler(90, 0, 0));
+		TextMesh nameText = (TextMesh)name.GetComponent ("TextMesh");
 
 	}
 
