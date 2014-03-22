@@ -127,6 +127,12 @@ public class GameController : MonoBehaviour {
 		foreach (Bullet bullet in bullets) {
 			Destroy(bullet.gameObject);
 		}
+
+		// reset pozice a velikosti pocitadel
+		scoreText.transform.position = new Vector3(-10, 5, 10);
+		scoreText.fontSize = 100;
+		timeText.transform.position = new Vector3(10, 5, 10);
+		timeText.fontSize = 100;
 	}
 
 
@@ -478,6 +484,13 @@ public class GameController : MonoBehaviour {
 			prefabText.text = "Touch to play again";
 			subText = Instantiate(prefabText, new Vector3(0, -20, -5), Quaternion.Euler (90, 0, 0)) as TextMesh;
 			subText.fontSize = 20;
+
+
+			// presun pocitadel doprostred, aby byly videt
+			scoreText.transform.position = new Vector3(-15, -20, 0);
+			scoreText.fontSize = 250;
+			timeText.transform.position = new Vector3(15, -20, 0);
+			timeText.fontSize = 250;
 		}
 	}
 
