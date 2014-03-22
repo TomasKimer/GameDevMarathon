@@ -5,46 +5,33 @@ public class CameraController : MonoBehaviour {
 
 	public PlayerController player;
 
-	public int leftX = -27; 
-	public int rightX = 13;
-	public int topZ = 8;
-	public int bottomZ = -29;
-
-	public float minRotationVertical = 67.0f;
-	public float maxRotationVertical = 87.0f;
-
-	public float minRotationHorizontal = -10.0f;
-	public float maxRotationHorizontal = 10.0f;
-
-
+	private int leftX = -22; 
+	private int rightX = 20;
+	private int topZ = 9;
+	private int bottomZ = -26;
 
 	// Use this for initialization
 	void Start () {
-	
+
+	}
+
+	static float remap(float oldValue, float oldMin, float oldMax, float newMin, float newMax) {
+		float oldRange = (oldMax - oldMin);
+		float newRange = (newMax - newMin);
+		float newValue = (((oldValue - oldMin) * newRange) / oldRange) + newMin;
+		return newValue;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		camera.transform.position = new Vector3(player.transform.position.x, camera.transform.position.y, player.transform.position.z);
 
-		// x - up/down
-		// y - left/right
+		float vertAmount = remap(camera.transform.position.x, bottomZ, topZ, -2.5f, 2.5f);
+		float horizAmount = remap(camera.transform.position.y, leftX, rightX, -2.5f, 2.5f);
 
-//		Vector3 rot = camera.transform.rotation.eulerAngles;
-
-		//float OldRange = (topZ - bottomZ);
-		//float NewRange = (1.0f - 0.0f);  
-		//float NewValue = (((camera.transform.position.x - bottomZ) * NewRange) / OldRange) + 0.0f;
-
-		//float vertAmount = NewValue;
-		//float horizAmount = 0.5f;
-		//rot.y = Mathf.Lerp(minRotationHorizontal, maxRotationHorizontal, vertAmount);
-		//rot.y = Mathf.Lerp(minRotationHorizontal, maxRotationHorizontal, horizAmount);
-
-
-		//rot.z += 0.1f;
-
-		//camera.transform.rotation = Quaternion.Euler(rot);
-		//camera.transform.Rotate (new Vector3(0, -0.02f, 0));
+		camera.transform.LookAt(new Vector3(camera.transform.position.x + vertAmount,
+		                                    1,
+		                                    camera.transform.position.z + horizAmount),
+		                        new Vector3(0,0,1));
 	}
 }
