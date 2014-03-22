@@ -27,10 +27,11 @@ public class GameController : MonoBehaviour {
 	private float maxSpawnPosZ;
 
 
-	public enum Screens { moving, welcome, game };
+	public enum Screens { moving, welcome, pause, game };
 	private Screens currentScreen = Screens.welcome;
 
 	private TextMesh logoText;
+	private TextMesh pauseText;
 
 	// ochrana doba pri prechodu mezi obrazovkama
 	private float transitionTime = 0;
@@ -112,10 +113,14 @@ public class GameController : MonoBehaviour {
 		}
 
 		if (currentScreen == Screens.game && transitionTime <= 0) {
-			if (currentScreen == Screens.game) {
-				if (Input.GetKeyDown (KeyCode.Escape))  {
-					WelcomScreen();
-				}
+			if (Input.GetKeyDown (KeyCode.Escape))  {
+				PauseScreen();
+			}
+		}
+
+		if (currentScreen == Screens.pause && transitionTime <= 0) {
+			if (Input.GetKeyDown (KeyCode.Escape))  {
+				GameScreen();
 			}
 		}
 
@@ -236,6 +241,10 @@ public class GameController : MonoBehaviour {
 
 	public void Resume() {
 
+		// zrusit pause text
+		if (pauseText != null) {
+			Destroy(pauseText.gameObject);
+		}
 	}
 
 
@@ -264,6 +273,22 @@ public class GameController : MonoBehaviour {
 
 		logoText.renderer.enabled = false;
 	}
+
+	public void PauseScreen() {
+		Pause ();
+		
+		currentScreen = Screens.pause;
+		
+		CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
+		camCtrl.MoveToMenu(4);
+		
+		transitionTime = 0.2f;
+		
+		prefabText.text = "PAUSED";
+		pauseText = Instantiate (prefabText, new Vector3(0, -50, 0), Quaternion.Euler(90, 0, 0)) as TextMesh;
+	}
+	
+
 
 
 
