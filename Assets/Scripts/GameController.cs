@@ -39,15 +39,14 @@ public class GameController : MonoBehaviour {
 
 		// zakladni setup sceny - kopie zdi jako dekorace
 		GameObject walls = GameObject.Find ("Walls");
-		for (int i = -10; i > -60; i -= 10) {
+		for (int i = -10; i > -100; i -= 10) {
 			Instantiate(walls, new Vector3(walls.transform.position.x, i, walls.transform.position.z), walls.transform.rotation);
 		}
 
 		Reset ();
 
 		// init kamery
-		CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
-		camCtrl.MoveToGame();
+		WelcomScreen ();
 	}
 
 
@@ -82,7 +81,7 @@ public class GameController : MonoBehaviour {
 		}
 		if (Input.GetKeyDown (KeyCode.M)) {
 			CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
-			camCtrl.MoveToMenu();
+			camCtrl.MoveToMenu(0);
 		}
 	}
 
@@ -157,6 +156,12 @@ public class GameController : MonoBehaviour {
 
 
 	public void WelcomScreen() {
+		CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
+		camCtrl.MoveToMenu(0);
+
+		prefabText.text = "SHOOT\nSPACE\nTHINGS";
+		GameObject name = (GameObject) Instantiate (prefabText, new Vector3 (0, -90, 0), Quaternion.Euler(90, 0, 0));
+		TextMesh nameText = (TextMesh)name.GetComponent ("TextMesh");
 
 	}
 
