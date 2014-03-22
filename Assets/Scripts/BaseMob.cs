@@ -11,6 +11,8 @@ public class BaseMob : MonoBehaviour {
 	public bool alive;
 	public bool paused;
 
+	public Explosion explosionPrefab;
+
 	
 	// Use this for initialization
 	void Start () {
@@ -66,6 +68,8 @@ public class BaseMob : MonoBehaviour {
 		if (LayerMask.LayerToName (collision.gameObject.layer) == "bullets") {
 			Destroy(this.gameObject);
 			Destroy (collision.gameObject);
+
+
 		}
 
 

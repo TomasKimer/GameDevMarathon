@@ -102,6 +102,8 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   freezeTime: 10
   alive: 0
+  paused: 0
+  explosionPrefab: {fileID: 11400000, guid: 26c93c3e20b7a5c4bbb5ad54fb419187, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
