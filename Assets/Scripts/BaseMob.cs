@@ -66,6 +66,9 @@ public class BaseMob : MonoBehaviour {
 		}
 
 		if (LayerMask.LayerToName (collision.gameObject.layer) == "bullets") {
+			GameObject ap = GameObject.Find("AudioPlayer");
+			ap.audio.Play();
+
 			Destroy(this.gameObject);
 			Destroy (collision.gameObject);
 

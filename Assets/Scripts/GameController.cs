@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour {
 	public BaseMob prefabBaseMob;
 	public RandomMob prefabRandomMob;
 	public FollowerMob prefabFollowerMob;
+	public MineMob prefabMineMob;
 	public TextMesh prefabText;
 
 	public PlayerController player;
@@ -212,11 +213,12 @@ public class GameController : MonoBehaviour {
 
 		// its time to spawn it
 		if (spawnInProgress && (gamePlayTime > nextSpawn)) {
-			int type = Random.Range(0,5);
+			int type = Random.Range(0,6);
 			if (type == 1) SpawnBase();
 			if (type == 2) SpawnRandom();
 			if (type == 3) SpawnFollower();
 			if (type == 4) SpawnWave(currentWave);
+			if (type == 5) SpawnMine();
 			spawnInProgress = false;
 		}
 
@@ -272,6 +274,21 @@ public class GameController : MonoBehaviour {
 		fm.speed = 5;
 
 		}
+
+	private void SpawnMine() {
+		MineMob fm = Instantiate (prefabMineMob) as MineMob;
+		Vector3 spawnpos = Vector3.zero;
+		while (true) {
+			spawnpos = new Vector3((float)Random.Range (minSpawnPosX,maxSpawnPosX), 1, (float)Random.Range(minSpawnPosZ, maxSpawnPosZ));
+			if (Vector3.Distance(spawnpos, player.transform.position) > 3 )
+				break;
+		}
+		
+		fm.transform.position = spawnpos;
+		fm.yAngle = 90;		
+		fm.speed = 5;
+		
+	}
 
 	private void SpawnRandom() {
 		RandomMob fm = Instantiate (prefabRandomMob) as RandomMob;
