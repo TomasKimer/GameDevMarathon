@@ -9,11 +9,14 @@ public class BaseMob : MonoBehaviour {
 	public Vector3 velocity;
 	public float freezeTime;
 	public bool alive;
+	public bool paused;
+
 	
 	// Use this for initialization
 	void Start () {
 		freezeTime = 1;
 		alive = false;
+		paused = false;
 		Collider playerCollider = GameObject.Find ("Player").transform.collider;
 		Physics.IgnoreCollision (playerCollider, gameObject.transform.collider,true);
 		//rigidbody.AddForce (Vector3.forward * speed);
@@ -44,7 +47,7 @@ public class BaseMob : MonoBehaviour {
 				}
 
 
-		if (alive) 	UpdateVelocity ();
+		if (alive && !paused) 	UpdateVelocity ();
 	}
 	
 	protected virtual void OnCollisionWithWalls(Collision collision) {
