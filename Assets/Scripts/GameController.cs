@@ -109,7 +109,7 @@ public class GameController : MonoBehaviour {
 		minSpawnInterval = 0f;
 		maxSpawnInterval = 2f;
 		nextSpawn = Random.Range (minSpawnInterval, maxSpawnInterval);
-		minMobs = 3;
+		minMobs = 6;
 		spawnInProgress = true;
 		timeToNextLevel = defaultTimeToNextLevel;
 
