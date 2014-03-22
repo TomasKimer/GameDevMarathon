@@ -38,7 +38,7 @@ public class GameController : MonoBehaviour {
 
 		// zakladni setup sceny - kopie zdi jako dekorace
 		GameObject walls = GameObject.Find ("Walls");
-		for (int i = -10; i > -60; i -= 10) {
+		for (int i = -10; i > -100; i -= 10) {
 			Instantiate(walls, new Vector3(walls.transform.position.x, i, walls.transform.position.z), walls.transform.rotation);
 		}
 
@@ -71,7 +71,7 @@ public class GameController : MonoBehaviour {
 
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Space)) {
-			SpawnFollower();
+			SpawnWave(0);
 		}
 
 		// testovani kamery
@@ -101,6 +101,20 @@ public class GameController : MonoBehaviour {
 
 
 
+	private void SpawnBase() {
+		BaseMob fm = Instantiate (prefabBaseMob) as BaseMob;
+		Vector3 spawnpos = Vector3.zero;
+		while (true) {
+			spawnpos = new Vector3((float)Random.Range (minSpawnPosX,maxSpawnPosX), 1, (float)Random.Range(minSpawnPosZ, maxSpawnPosZ));
+			if (Vector3.Distance(spawnpos, player.transform.position) > 3 )
+				break;
+		}
+		
+		fm.transform.position = spawnpos;
+		
+		fm.speed = 5;
+
+		}
 
 	private void SpawnWave(int wave) {
 		if (wave == 0) {
