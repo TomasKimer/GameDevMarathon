@@ -42,8 +42,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_LocalRotation: {x: .715378046, y: 0, z: 0, w: .698737681}
-  m_LocalPosition: {x: -4.09482527, y: -.0812966749, z: -4.80399227}
+  m_LocalRotation: {x: .0121612782, y: 0, z: 0, w: .99992609}
+  m_LocalPosition: {x: 2.98288393, y: .736095369, z: -.98640132}
   m_LocalScale: {x: .5, y: .5, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -161,7 +161,7 @@ ParticleRenderer:
   serializedVersion: 2
   m_CameraVelocityScale: 0
   m_StretchParticles: 3
-  m_LengthScale: 1
+  m_LengthScale: 1.5
   m_VelocityScale: .0500000007
   m_MaxParticleSize: 2
   UV Animation:
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 280bc9a676e6cdd42b66f1c201083c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 20
   duration: 1
 --- !u!1001 &100100000
 Prefab:
