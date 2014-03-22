@@ -33,6 +33,7 @@ public class GameController : MonoBehaviour {
 	private TextMesh logoText;
 	private TextMesh pauseText;
 	private TextMesh gameOverText;
+	private TextMesh subText;
 
 	// ochrana doba pri prechodu mezi obrazovkama
 	private float transitionTime = 0;
@@ -137,11 +138,13 @@ public class GameController : MonoBehaviour {
 			}
 
 			// dead --> restart
-			if (Input.GetKeyDown(KeyCode.Space)) {
+			if (Input.GetKeyDown(KeyCode.Space) || Input.touchCount > 0) {
 				Reset();
 				GameScreen();
 			}
 		}
+
+
 
 
 
@@ -306,6 +309,11 @@ public class GameController : MonoBehaviour {
 		if (gameOverText != null) {
 			Destroy(gameOverText.gameObject);
 		}
+		
+		// zrusit pripadny sub text
+		if (subText != null) {
+			Destroy(subText.gameObject);
+		}
 	}
 
 
@@ -359,36 +367,38 @@ public class GameController : MonoBehaviour {
 			currentScreen = Screens.gameOver;
 
 			prefabText.text = "GAME OVER";
-			gameOverText = Instantiate (prefabText, new Vector3 (0, -20, 0), Quaternion.Euler (90, 0, 0)) as TextMesh;
-			gameOverText.fontSize = 30;
+			gameOverText = Instantiate (prefabText, new Vector3 (0, -20, 5), Quaternion.Euler (90, 0, 0)) as TextMesh;
+			gameOverText.fontSize = 40;
+
+			prefabText.text = "Touch to play again";
+			subText = Instantiate(prefabText, new Vector3(0, -20, -5), Quaternion.Euler (90, 0, 0)) as TextMesh;
+			subText.fontSize = 20;
 		}
 	}
 
 
 
 
-
+	/*
 	void OnGUI () {
-		/*
-		if (showGameOver) {
-			int boxW = 535;
-			int boxH = 109;
-			Rect box = new Rect((Screen.width-boxW)/2, (Screen.height-boxH)/2 - 100, boxW, boxH);
 
-			Texture2D texture = Resources.Load("gameover") as Texture2D;
-			GUI.DrawTexture (box, texture);
-
+		if (currentScreen == Screens.gameOver) {
 			int btnW = 200;
 			int btnH = 200;
-			Rect btn = new Rect((Screen.width-btnW)/2, (Screen.height-btnH)/2 + 50, btnW, btnH);
+			Rect btn = new Rect((Screen.width-btnW)/2, (Screen.height-btnH)/2 + 150, btnW, btnH);
 
-			if (GUI.Button (btn, "Play again")) {
+			GUI.contentColor = Color.white;
+			GUIStyle style = new GUIStyle();
+			style.font = prefabText.font;
+
+
+			if (GUI.Button (btn, "Play again", style)) {
 				Reset();
 			}
 		}
-		*/
-	}
 
+	}
+	*/
 	
 
 }
