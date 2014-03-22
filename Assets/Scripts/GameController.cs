@@ -240,21 +240,29 @@ public class GameController : MonoBehaviour {
 
 
 	public void WelcomScreen() {
+		Pause ();
+
 		currentScreen = Screens.welcome;
 
 		CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
 		camCtrl.MoveToMenu(0);
 
 		transitionTime = 0.2f;
+
+		logoText.renderer.enabled = true;
 	}
 
 	public void GameScreen() {
+		Resume ();
+
 		currentScreen = Screens.game;
 		
 		CameraController camCtrl = (CameraController)Camera.main.GetComponent("CameraController");
 		camCtrl.MoveToGame();
 
 		transitionTime = 0.2f;
+
+		logoText.renderer.enabled = false;
 	}
 
 
