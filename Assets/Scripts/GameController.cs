@@ -14,10 +14,10 @@ public class GameController : MonoBehaviour {
 
 	public PlayerController player;
 
-	public float minSpawnPosX = -10;
-	public float maxSpawnPosX = 10;
-	public float minSpawnPosZ = -22;
-	public float maxSpawnPosZ = 7;
+	private float minSpawnPosX;
+	private float maxSpawnPosX;
+	private float minSpawnPosZ;
+	private float maxSpawnPosZ;
 
 	
 
@@ -29,6 +29,11 @@ public class GameController : MonoBehaviour {
 			GameObject joy = GameObject.Find("Dual Joysticks");
 			Destroy(joy);
 		}
+
+		minSpawnPosX = -7;
+		maxSpawnPosX = 16;
+		minSpawnPosZ = -6;
+		maxSpawnPosZ = 10;
 
 
 		// zakladni setup sceny - kopie zdi jako dekorace
@@ -82,7 +87,7 @@ public class GameController : MonoBehaviour {
 		FollowerMob fm = Instantiate (prefabFollowerMob) as FollowerMob;
 		Vector3 spawnpos = Vector3.zero;
 		while (true) {
-			spawnpos = new Vector3(Random.Range (minSpawnPosX,maxSpawnPosX), 1, Random.Range(minSpawnPosZ, maxSpawnPosZ));
+			spawnpos = new Vector3((float)Random.Range (minSpawnPosX,maxSpawnPosX), 1, (float)Random.Range(minSpawnPosZ, maxSpawnPosZ));
 			if (Vector3.Distance(spawnpos, player.transform.position) > 3 )
 				break;
 		}

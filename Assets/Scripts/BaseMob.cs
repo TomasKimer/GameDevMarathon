@@ -7,10 +7,14 @@ public class BaseMob : MonoBehaviour {
 	public float speed = 10;
 	private float orientation = 1;
 	public Vector3 velocity;
-	public float freezeTime = 1;
+	public float freezeTime = 10;
+	public bool alive;
 	
 	// Use this for initialization
 	void Start () {
+		alive = false;
+		Collider playerCollider = GameObject.Find ("Player").transform.collider;
+		Physics.IgnoreCollision (playerCollider, gameObject.transform.collider,true);
 		//rigidbody.AddForce (Vector3.forward * speed);
 		//rigidbody.AddTorque (new Vector3 (0, yAngle, 0));
 		float x = Random.Range ((float)-1, (float)1);
@@ -32,8 +36,14 @@ public class BaseMob : MonoBehaviour {
 
 		if (freezeTime > 0)
 						freezeTime -= Time.deltaTime;
-		else
-			UpdateVelocity ();
+				else {
+						alive = true;
+						Collider playerCollider = GameObject.Find ("Player").transform.collider;
+						Physics.IgnoreCollision (playerCollider, gameObject.transform.collider,false);
+				}
+
+
+		if (alive) 	UpdateVelocity ();
 	}
 	
 	protected virtual void OnCollisionWithWalls(Collision collision) {
@@ -47,7 +57,6 @@ public class BaseMob : MonoBehaviour {
 			gameObject.rigidbody.velocity = Vector3.zero;
 			gameObject.rigidbody.angularVelocity = Vector3.zero;
 			OnCollisionWithWalls(collision);
-
 		}
 
 		if (LayerMask.LayerToName (collision.gameObject.layer) == "bullets") {

@@ -13,7 +13,7 @@ public class FollowerMob : BaseMob {
 		myPos = gameObject.transform.position;
 		velocity = (playerPos - myPos);
 		gameObject.transform.Translate (velocity * Time.deltaTime, Space.World);
-		gameObject.transform.Rotate (new Vector3 (0, 180, 0) * Time.deltaTime);
+		gameObject.transform.Rotate (new Vector3 (0, 360, 0) * Time.deltaTime);
 		
 	}
 	
